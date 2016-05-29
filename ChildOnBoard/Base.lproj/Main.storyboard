@@ -104,7 +104,7 @@
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="0yQ-5p-xdn"/>
                         <barButtonItem title="Regions" id="njs-VX-rz0">
                             <connections>
-                                <segue destination="WXW-q2-SjL" kind="show" id="Wq7-Uo-rBk"/>
+                                <segue destination="WXW-q2-SjL" kind="show" identifier="Region List" id="Wq7-Uo-rBk"/>
                             </connections>
                         </barButtonItem>
                     </toolbarItems>

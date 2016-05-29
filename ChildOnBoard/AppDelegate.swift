@@ -7,11 +7,50 @@
 //
 
 import UIKit
+import CoreLocation
+
+struct Constants{
+    static let visitCategory = "com.mySmartSoftware.ChildOnBoard.visitCategory"
+    static let departureCategory = "com.mySmartSoftware.ChildOnBoard.departureCategory"
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var locationManager = CLLocationManager()
+
+    func registerForLocalUserNotification(){
+        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: [self.notificationCategories()])
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+    }
+    
+    func notificationCategories() -> UIUserNotificationCategory{
+        let act1 = UIMutableUserNotificationAction()
+        act1.title = "Action 1"
+        act1.activationMode = .Foreground
+        act1.identifier = "ident1"
+        act1.destructive = false
+        
+        let act2 = UIMutableUserNotificationAction()
+        act2.title = "Action 2"
+        act2.activationMode = .Background
+        act2.identifier = "ident2"
+        act2.destructive = true
+        
+        let act3 = UIMutableUserNotificationAction()
+        act3.title = "Action 3"
+        act3.activationMode = .Background
+        act3.identifier = "ident3"
+        act3.destructive = false
+        
+        let cat = UIMutableUserNotificationCategory()
+        cat.identifier = Constants.visitCategory
+        cat.setActions([act1, act3], forContext: .Minimal)
+        cat.setActions([act1, act2, act3], forContext: .Default)
+        
+        return cat
+    }
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {

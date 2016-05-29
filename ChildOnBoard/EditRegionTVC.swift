@@ -33,21 +33,6 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     
-    //MARK: Table View Delegate
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        if ((indexPath.section == 1) && (indexPath.row  == 1)){
-            if let cell = tableView.cellForRowAtIndexPath(indexPath){
-                if cell.accessoryType == .None{
-                    cell.accessoryType = .Checkmark
-                }else{
-                    cell.accessoryType = .None
-                }
-                tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .None)
-            }
-        }
-    }
     
     //MARK: Map View Delegate
     
@@ -110,6 +95,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     //MARK: Text Field Delegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
         return true
     }
     
@@ -121,7 +107,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     //MARK: Location Manager Delegate
     
     @IBAction func locateUser(sender: UIBarButtonItem) {
-        
+        self.findMyLocation()
     }
     
     

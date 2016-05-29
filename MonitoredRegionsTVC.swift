@@ -12,9 +12,12 @@ import CoreLocation
 class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
+    var delegate : EditRegionDelegate?
 
     func updateRegion(region: CLCircularRegion){
-        
+        if !monitoredRegions.contains(region){
+            monitoredRegions.append(region)
+        }
     }
     
     //MARK: - UITableViewDataSource
@@ -52,7 +55,7 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
     
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let identifier = segue.identifier, dest = segue.destinationViewController as? EditRegionTVC {
+        if let identifier = segue.identifier, dest = segue.destinationViewController.contentViewController as? EditRegionTVC {
             switch identifier {
             case "Edit Region":
                 dest.delegate = self
@@ -68,5 +71,10 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
                 break
             }
         }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.tableView.reloadData()
     }
 }
