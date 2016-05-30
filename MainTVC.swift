@@ -38,11 +38,13 @@ extension UIViewController{
 class MainTVC: UITableViewController, EditRegionDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
+    var appDelegate : AppDelegate?
     
     func updateRegion(region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
         }
+        self.appDelegate?.monitorRegions(self.monitoredRegions)
     }
 
     // MARK: - UITableViewDelegate
@@ -70,6 +72,11 @@ class MainTVC: UITableViewController, EditRegionDelegate {
                 break
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
     }
     
 }

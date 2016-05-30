@@ -140,6 +140,8 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
         if let name = regionNameTextField.text{
             if let loc = location{
                 let reg = CLCircularRegion(center: loc, radius: defaultRadius, identifier: name)
+                reg.notifyOnExit = true
+                reg.notifyOnEntry = false
                 self.delegate?.updateRegion(reg)
             }
         }

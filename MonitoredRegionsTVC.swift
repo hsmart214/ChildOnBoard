@@ -18,6 +18,7 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
         }
+        delegate?.updateRegion(region)
     }
     
     //MARK: - UITableViewDataSource
