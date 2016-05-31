@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 import CoreLocation
 import MapKit
 
@@ -39,10 +40,17 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
     var appDelegate : AppDelegate?
+    var observer : NSObjectProtocol?
     
     func updateRegion(region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
+        }
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)){
+            if let userDir = NSFileManager.defaultManager().URLsForDirectory(.UserDirectory, inDomains: .UserDomainMask).last{
+                let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
+                NSKeyedArchiver.archiveRootObject(self.monitoredRegions, toFile: archiveURL.path!)
+            }
         }
         self.appDelegate?.monitorRegions(self.monitoredRegions)
     }
@@ -54,6 +62,14 @@ class MainTVC: UITableViewController, EditRegionDelegate {
             delegate.registerForLocalUserNotification()
         }
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        switch indexPath.row {
+        case 0,1:
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+        case 2,3:
+            appDelegate?.locationManager.startMonitoringVisits()
+        default:
+            break
+        }
     }
     
     //MARK: - Navigation
@@ -77,6 +93,9 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        if let userDir = NSFileManager.defaultManager().URLsForDirectory(.UserDirectory, inDomains: .UserDomainMask).last{
+            let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
+            monitoredRegions = NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURL.path!) as? [COBCircularRegion] ?? [CLCircularRegion]()
+        }
     }
-    
 }

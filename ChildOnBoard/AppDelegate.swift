@@ -13,6 +13,7 @@ struct Constants{
     static let visitCategory = "com.mySmartSoftware.ChildOnBoard.visitCategory"
     static let departureCategory = "com.mySmartSoftware.ChildOnBoard.departureCategory"
     static let companionKey = "com.mySmartSoftware.ChildOnBoard.companionKey"
+    static let archiveFilename = "com.mySmartSoftware.ChildOnBoard.archive"
 }
 
 @UIApplicationMain
@@ -45,16 +46,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         cat1.setActions([act1, act2], forContext: .Default)
         
         let act3 = UIMutableUserNotificationAction()
-        act1.title = "Yes"
-        act1.activationMode = .Background
-        act1.identifier = "monitor"
-        act1.destructive = false
+        act3.title = "Yes"
+        act3.activationMode = .Background
+        act3.identifier = "monitor"
+        act3.destructive = false
         
         let act4 = UIMutableUserNotificationAction()
-        act2.title = "No, thanks"
-        act2.activationMode = .Background
-        act2.identifier = "denied"
-        act2.destructive = true
+        act4.title = "No, thanks"
+        act4.activationMode = .Background
+        act4.identifier = "denied"
+        act4.destructive = true
         
         let cat2 = UIMutableUserNotificationCategory()
         cat2.identifier = Constants.departureCategory
@@ -70,8 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 let notification = UILocalNotification()
                 notification.region = region
                 notification.regionTriggersOnce = false
-                notification.category = Constants.departureCategory
                 notification.soundName = UILocalNotificationDefaultSoundName
+                notification.category = Constants.departureCategory
                 notification.alertTitle = "Starting a Trip?"
                 notification.alertBody = String(format: "Do you have your %@ with you?", self.companion)
                 UIApplication.sharedApplication().scheduleLocalNotification(notification)
@@ -99,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types.contains(.None){
+        if notificationSettings.types == .None{
             print ("Local Notifications denied")
         }else{
             print ("Successfully registered for local notifications")
@@ -138,11 +139,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         completionHandler()
     }
     
-    func applicationWillResignActive(application: UIApplication) {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-    }
-
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.

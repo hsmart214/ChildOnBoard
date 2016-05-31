@@ -21,12 +21,17 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     let defaultEdge = CLLocationDistance(1000)
     let defaultRadius = CLLocationDistance(400)
     
-    var region: CLCircularRegion?
+    var region: COBCircularRegion?{
+        didSet{
+            placemark = region?.placemark
+            location = region?.center
+        }
+    }
     var myLocation : CLLocationCoordinate2D?
     var location : CLLocationCoordinate2D?
+    var placemark : MKPlacemark?
     
-    var manager : CLLocationManager?
-    var geocoder : CLGeocoder?
+    var geocoder = CLGeocoder()
     
     @IBOutlet weak var regionNameTextField: UITextField!
     
@@ -34,7 +39,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var mapView: MKMapView!
     
     
-    //MARK: Map View Delegate
+    //MARK: - Map View Delegate
     
     func findMyLocation(){
         mapView.setUserTrackingMode(.Follow, animated: true)
@@ -47,11 +52,10 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         location = view.annotation?.coordinate
+        placemark = view.annotation as? MKPlacemark // this will correctly nil out the placemark if one is not available
     }
     
-    
-    
-    //MARK: Search Bar Delegate
+    //MARK: - Search Bar Delegate
     
     func searchBarShouldEndEditing(searchBar: UISearchBar) -> Bool {
         return true
@@ -68,7 +72,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
             var rgn : CLCircularRegion
             if let loc = myLocation{
                 rgn = CLCircularRegion(center: loc, radius: CLLocationDistance(15000), identifier: "Search Region")
-                geocoder?.geocodeAddressString(addy, inRegion: rgn) { places, err in
+                geocoder.geocodeAddressString(addy, inRegion: rgn) { places, err in
                     if places != nil {
                         self.mapView.removeAnnotations(self.mapView.annotations)
                         for place in places!{
@@ -79,7 +83,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
                     }
                 }
             }else{
-                geocoder?.geocodeAddressString(addy){ places, err in
+                geocoder.geocodeAddressString(addy){ places, err in
                     if places != nil {
                         self.mapView.removeAnnotations(self.mapView.annotations)
                         for place in places!{
@@ -92,7 +96,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
             }
         }
     }
-    //MARK: Text Field Delegate
+    //MARK: - Text Field Delegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -104,34 +108,38 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
         return true
     }
     
-    //MARK: Location Manager Delegate
+    //MARK: - UITableViewDataSource
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0{
+            return region?.identifier ?? "New Region"
+        }
+        return "Provide a name for this location"
+    }
+    
     
     @IBAction func locateUser(sender: UIBarButtonItem) {
         self.findMyLocation()
     }
     
-    
+    //MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if manager == nil {
-            manager = CLLocationManager()
-        }
-        manager?.delegate = self
         
-        geocoder = CLGeocoder()
         if let reg = region{
             mapView.showsUserLocation = false
             let span = MKCoordinateRegionMakeWithDistance(reg.center, defaultEdge, defaultEdge)
             mapView.region = span
-            mapView.addAnnotation(reg)
+            mapView.addAnnotation(reg.placemark ?? reg)
             regionNameTextField.text = reg.identifier
         }else{
             mapView.showsUserLocation = true
         }
     }
     
-    //MARK: Navigation
+    //MARK: - Navigation
+    
     @IBAction func cancel(sender: AnyObject) {
         self.presentingViewController?.dismissViewControllerAnimated(true){}
     }
@@ -139,9 +147,10 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     @IBAction func save(sender: AnyObject) {
         if let name = regionNameTextField.text{
             if let loc = location{
-                let reg = CLCircularRegion(center: loc, radius: defaultRadius, identifier: name)
+                let reg = COBCircularRegion(center: loc, radius: defaultRadius, identifier: name)
                 reg.notifyOnExit = true
                 reg.notifyOnEntry = false
+                reg.placemark = placemark
                 self.delegate?.updateRegion(reg)
             }
         }

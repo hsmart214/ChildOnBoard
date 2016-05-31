@@ -61,13 +61,12 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
             case "Edit Region":
                 dest.delegate = self
                 if let cell = sender as? UITableViewCell, index = self.tableView.indexPathForCell(cell)?.row{
-                    dest.region = monitoredRegions[index]
+                    dest.region = monitoredRegions[index] as? COBCircularRegion
                 }
             case "Add Region":
                 dest.delegate = self
                 let locationManager = CLLocationManager()
                 locationManager.requestAlwaysAuthorization()
-                dest.manager = locationManager
             default:
                 break
             }

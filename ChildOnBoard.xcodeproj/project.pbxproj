@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4274D4701CFD10AC009889CD /* COBCircularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */; };
 		42F542421CFA6D5A00BE8549 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F542411CFA6D5A00BE8549 /* AppDelegate.swift */; };
 		42F542471CFA6D5A00BE8549 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42F542451CFA6D5A00BE8549 /* Main.storyboard */; };
 		42F542491CFA6D5A00BE8549 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F542481CFA6D5A00BE8549 /* Assets.xcassets */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COBCircularRegion.swift; sourceTree = "<group>"; };
 		42F5423E1CFA6D5A00BE8549 /* ChildOnBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOnBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F542411CFA6D5A00BE8549 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42F542461CFA6D5A00BE8549 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				42F542561CFA7A6C00BE8549 /* MainTVC.swift */,
 				42F542581CFA839600BE8549 /* MonitoredRegionsTVC.swift */,
 				42F5425A1CFA843300BE8549 /* EditRegionTVC.swift */,
+				4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */,
 				42F542411CFA6D5A00BE8549 /* AppDelegate.swift */,
 				42F542551CFA773D00BE8549 /* Supporting Files */,
 			);
@@ -162,6 +165,7 @@
 				42F5425B1CFA843300BE8549 /* EditRegionTVC.swift in Sources */,
 				42F542571CFA7A6C00BE8549 /* MainTVC.swift in Sources */,
 				42F542421CFA6D5A00BE8549 /* AppDelegate.swift in Sources */,
+				4274D4701CFD10AC009889CD /* COBCircularRegion.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -310,6 +314,7 @@
 				42F542521CFA6D5A00BE8549 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
