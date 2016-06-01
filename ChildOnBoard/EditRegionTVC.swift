@@ -25,7 +25,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     let locationManager = CLLocationManager()
     
     let defaultEdge = CLLocationDistance(1000)
-    let defaultRadius = CLLocationDistance(100)
+    var defaultRadius = CLLocationDistance(100)
     
     var region: COBCircularRegion?{
         didSet{
@@ -52,6 +52,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
         if let loc = myLocation{
             mapView.addAnnotation(loc)
         }
+        mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
 //    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
@@ -144,6 +145,12 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
             regionNameTextField.text = reg.identifier
         }else{
             mapView.showsUserLocation = true
+        }
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaultRadius = CLLocationDistance(defaults.integerForKey(Constants.radiusKey))
+        if defaultRadius == 0 {
+            defaultRadius = 100
+            defaults.setInteger(100, forKey: Constants.radiusKey)
         }
     }
     

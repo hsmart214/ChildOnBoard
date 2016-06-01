@@ -13,6 +13,7 @@ struct Constants{
     static let visitCategory = "com.mySmartSoftware.ChildOnBoard.visitCategory"
     static let departureCategory = "com.mySmartSoftware.ChildOnBoard.departureCategory"
     static let companionKey = "com.mySmartSoftware.ChildOnBoard.companionKey"
+    static let radiusKey = "com.mySmartSoftware.ChildOnBoard.radiusKey"
     static let archiveFilename = "com.mySmartSoftware.ChildOnBoard.archive"
 }
 
