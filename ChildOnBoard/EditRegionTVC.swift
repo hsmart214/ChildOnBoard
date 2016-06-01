@@ -12,6 +12,7 @@ import MapKit
 
 protocol EditRegionDelegate{
     func updateRegion(_:CLCircularRegion)
+    func removeRegion(_:CLCircularRegion)
 }
 
 class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
@@ -19,7 +20,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     var delegate : EditRegionDelegate?
     
     let defaultEdge = CLLocationDistance(1000)
-    let defaultRadius = CLLocationDistance(400)
+    let defaultRadius = CLLocationDistance(100)
     
     var region: COBCircularRegion?{
         didSet{

@@ -13,6 +13,7 @@ import MapKit
 class COBCircularRegion: CLCircularRegion {
     
     var placemark : MKPlacemark?
+    var currentlyMonitored = true
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

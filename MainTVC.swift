@@ -39,20 +39,36 @@ extension UIViewController{
 class MainTVC: UITableViewController, EditRegionDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
-    var appDelegate : AppDelegate?
-    var observer : NSObjectProtocol?
+    weak var appDelegate : AppDelegate?
+    @IBOutlet weak var numberOfRegionsLabel: UILabel!
+    
+    func updateUI(){
+        let notifications = UIApplication.sharedApplication().scheduledLocalNotifications
+        let result = String(format: "%d", notifications?.count ?? monitoredRegions.count)
+        numberOfRegionsLabel.text = result
+    }
     
     func updateRegion(region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
         }
+        let mRegions = monitoredRegions // make an immutable copy to pass to the closure
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)){
-            if let userDir = NSFileManager.defaultManager().URLsForDirectory(.UserDirectory, inDomains: .UserDomainMask).last{
+            let ud = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+            if ud.count != 0{
+                let userDir = ud[0]
                 let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
-                NSKeyedArchiver.archiveRootObject(self.monitoredRegions, toFile: archiveURL.path!)
+                NSKeyedArchiver.archiveRootObject(mRegions, toFile: archiveURL.path!)
             }
         }
-        self.appDelegate?.monitorRegions(self.monitoredRegions)
+        self.appDelegate?.monitorRegions(monitoredRegions)
+    }
+    
+    func removeRegion(region: CLCircularRegion) {
+        if let index = monitoredRegions.indexOf(region){
+            monitoredRegions.removeAtIndex(index)
+        }
+        self.appDelegate?.monitorRegions(monitoredRegions)
     }
 
     // MARK: - UITableViewDelegate
@@ -90,12 +106,21 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        updateUI()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
-        if let userDir = NSFileManager.defaultManager().URLsForDirectory(.UserDirectory, inDomains: .UserDomainMask).last{
+        let ud = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        if ud.count != 0{
+            let userDir = ud[0]
             let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
             monitoredRegions = NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURL.path!) as? [COBCircularRegion] ?? [CLCircularRegion]()
         }
+        appDelegate?.monitorRegions(monitoredRegions)
+        updateUI()
     }
 }

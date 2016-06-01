@@ -65,19 +65,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func monitorRegions(regions:[CLCircularRegion]){
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)){
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
-            for region in regions{
-                let notification = UILocalNotification()
-                notification.region = region
-                notification.regionTriggersOnce = false
-                notification.soundName = UILocalNotificationDefaultSoundName
-                notification.category = Constants.departureCategory
-                notification.alertTitle = "Starting a Trip?"
-                notification.alertBody = String(format: "Do you have your %@ with you?", self.companion)
-                UIApplication.sharedApplication().scheduleLocalNotification(notification)
-            }
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        var notes = [UILocalNotification]()
+        for region in regions{
+            let notification = UILocalNotification()
+            notification.region = region
+            notification.regionTriggersOnce = false
+            notification.soundName = UILocalNotificationDefaultSoundName
+            notification.category = Constants.departureCategory
+            notification.alertTitle = "Starting a Trip?"
+            notification.alertBody = String(format: "Do you have your %@ with you?", self.companion)
+            notes.append(notification)
         }
+        UIApplication.sharedApplication().scheduledLocalNotifications = notes
     }
 
 
@@ -85,6 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         let defaults = NSUserDefaults.standardUserDefaults()
         companion = defaults.stringForKey(Constants.companionKey) ?? companion
         locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
         if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
             self.application(application, didReceiveLocalNotification: notification)
         }
@@ -100,11 +101,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        if notificationSettings.types == .None{
-            print ("Local Notifications denied")
-        }else{
-            print ("Successfully registered for local notifications")
-        }
+
     }
     
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?,
@@ -115,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             case Constants.departureCategory:
                 switch ident {
                 case "denied":
-                    // probably do nothing
+                    locationManager.stopMonitoringVisits()
                     break
                 case "monitor":
                     locationManager.startMonitoringVisits()
@@ -139,23 +136,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         completionHandler()
     }
     
-    func applicationDidEnterBackground(application: UIApplication) {
-        // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-        // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-    }
-
-    func applicationWillEnterForeground(application: UIApplication) {
-        // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-    }
-
-    func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-    }
-
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
-    }
-
     //MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didVisit visit: CLVisit) {

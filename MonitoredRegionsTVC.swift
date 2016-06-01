@@ -21,6 +21,10 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
         delegate?.updateRegion(region)
     }
     
+    func removeRegion(region: CLCircularRegion){
+        delegate?.removeRegion(region)
+    }
+    
     //MARK: - UITableViewDataSource
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -47,9 +51,11 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete{
             tableView.beginUpdates()
+            delegate?.removeRegion(monitoredRegions[indexPath.row])
             monitoredRegions.removeAtIndex(indexPath.row)
-            tableView.endUpdates()
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
             tableView.reloadData()
+            tableView.endUpdates()
         }
     }
     
@@ -65,8 +71,6 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
                 }
             case "Add Region":
                 dest.delegate = self
-                let locationManager = CLLocationManager()
-                locationManager.requestAlwaysAuthorization()
             default:
                 break
             }
