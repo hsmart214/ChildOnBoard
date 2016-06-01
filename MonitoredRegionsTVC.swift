@@ -53,7 +53,7 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
             tableView.beginUpdates()
             delegate?.removeRegion(monitoredRegions[indexPath.row])
             monitoredRegions.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
             tableView.reloadData()
             tableView.endUpdates()
         }

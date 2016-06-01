@@ -43,15 +43,28 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     @IBOutlet weak var numberOfRegionsLabel: UILabel!
     
     func updateUI(){
-        let notifications = UIApplication.sharedApplication().scheduledLocalNotifications
-        let result = String(format: "%d", notifications?.count ?? monitoredRegions.count)
-        numberOfRegionsLabel.text = result
+        //        let notifications = UIApplication.sharedApplication().scheduledLocalNotifications
+        //        let result = String(format: "%d", notifications?.count ?? monitoredRegions.count)
+        numberOfRegionsLabel.text = "\(monitoredRegions.count)"
     }
     
     func updateRegion(region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
         }
+        self.appDelegate?.monitorRegions(monitoredRegions)
+        archiveRegions()
+    }
+    
+    func removeRegion(region: CLCircularRegion) {
+        if let index = monitoredRegions.indexOf(region){
+            monitoredRegions.removeAtIndex(index)
+        }
+        self.appDelegate?.monitorRegions(monitoredRegions)
+        archiveRegions()
+    }
+    
+    func archiveRegions(){
         let mRegions = monitoredRegions // make an immutable copy to pass to the closure
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)){
             let ud = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
@@ -61,14 +74,6 @@ class MainTVC: UITableViewController, EditRegionDelegate {
                 NSKeyedArchiver.archiveRootObject(mRegions, toFile: archiveURL.path!)
             }
         }
-        self.appDelegate?.monitorRegions(monitoredRegions)
-    }
-    
-    func removeRegion(region: CLCircularRegion) {
-        if let index = monitoredRegions.indexOf(region){
-            monitoredRegions.removeAtIndex(index)
-        }
-        self.appDelegate?.monitorRegions(monitoredRegions)
     }
 
     // MARK: - UITableViewDelegate

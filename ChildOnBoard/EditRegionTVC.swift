@@ -43,7 +43,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     //MARK: - Map View Delegate
     
     func findMyLocation(){
-        mapView.setUserTrackingMode(.Follow, animated: true)
+        mapView.setUserTrackingMode(.Follow, animated: false)
     }
     
     func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
