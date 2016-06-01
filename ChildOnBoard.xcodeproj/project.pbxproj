@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4274D4701CFD10AC009889CD /* COBCircularRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */; };
-		4286B8AE1CFD40A600B2A9AB /* Sim.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 4286B8AD1CFD40A600B2A9AB /* Sim.gpx */; };
 		42F542421CFA6D5A00BE8549 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F542411CFA6D5A00BE8549 /* AppDelegate.swift */; };
 		42F542471CFA6D5A00BE8549 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 42F542451CFA6D5A00BE8549 /* Main.storyboard */; };
 		42F542491CFA6D5A00BE8549 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 42F542481CFA6D5A00BE8549 /* Assets.xcassets */; };
@@ -20,7 +19,6 @@
 
 /* Begin PBXFileReference section */
 		4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COBCircularRegion.swift; sourceTree = "<group>"; };
-		4286B8AD1CFD40A600B2A9AB /* Sim.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Sim.gpx; sourceTree = "<group>"; };
 		42F5423E1CFA6D5A00BE8549 /* ChildOnBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOnBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F542411CFA6D5A00BE8549 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42F542461CFA6D5A00BE8549 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,7 +77,6 @@
 			children = (
 				42F542481CFA6D5A00BE8549 /* Assets.xcassets */,
 				42F5424D1CFA6D5A00BE8549 /* Info.plist */,
-				4286B8AD1CFD40A600B2A9AB /* Sim.gpx */,
 				42F542531CFA6E0D00BE8549 /* MapKit.framework */,
 			);
 			name = "Supporting Files";
@@ -152,7 +149,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4286B8AE1CFD40A600B2A9AB /* Sim.gpx in Resources */,
 				42F542491CFA6D5A00BE8549 /* Assets.xcassets in Resources */,
 				42F542471CFA6D5A00BE8549 /* Main.storyboard in Resources */,
 			);

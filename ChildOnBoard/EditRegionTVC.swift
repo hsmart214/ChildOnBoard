@@ -15,9 +15,14 @@ protocol EditRegionDelegate{
     func removeRegion(_:CLCircularRegion)
 }
 
+extension CLLocation : MKAnnotation{
+    
+}
+
 class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var delegate : EditRegionDelegate?
+    let locationManager = CLLocationManager()
     
     let defaultEdge = CLLocationDistance(1000)
     let defaultRadius = CLLocationDistance(100)
@@ -28,7 +33,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
             location = region?.center
         }
     }
-    var myLocation : CLLocationCoordinate2D?
+    var myLocation : CLLocation?
     var location : CLLocationCoordinate2D?
     var placemark : MKPlacemark?
     
@@ -43,13 +48,16 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     //MARK: - Map View Delegate
     
     func findMyLocation(){
-        mapView.setUserTrackingMode(.Follow, animated: false)
+        myLocation = locationManager.location
+        if let loc = myLocation{
+            mapView.addAnnotation(loc)
+        }
     }
     
-    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-        myLocation = userLocation.location?.coordinate
-        mapView.region = MKCoordinateRegionMakeWithDistance(myLocation!, defaultEdge, defaultEdge)
-    }
+//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
+//        myLocation = userLocation.location?.coordinate
+//        mapView.region = MKCoordinateRegionMakeWithDistance(myLocation!, defaultEdge, defaultEdge)
+//    }
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         location = view.annotation?.coordinate
@@ -71,7 +79,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
         searchBar.resignFirstResponder()
         if let addy = searchBar.text{
             var rgn : CLCircularRegion
-            if let loc = myLocation{
+            if let loc = myLocation?.coordinate{
                 rgn = CLCircularRegion(center: loc, radius: CLLocationDistance(15000), identifier: "Search Region")
                 geocoder.geocodeAddressString(addy, inRegion: rgn) { places, err in
                     if places != nil {
