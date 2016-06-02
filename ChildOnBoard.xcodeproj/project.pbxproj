@@ -16,6 +16,7 @@
 		42F542571CFA7A6C00BE8549 /* MainTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F542561CFA7A6C00BE8549 /* MainTVC.swift */; };
 		42F542591CFA839600BE8549 /* MonitoredRegionsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F542581CFA839600BE8549 /* MonitoredRegionsTVC.swift */; };
 		42F5425B1CFA843300BE8549 /* EditRegionTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F5425A1CFA843300BE8549 /* EditRegionTVC.swift */; };
+		42FE93D31CFFA42900B07AB7 /* RegionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FE93D21CFFA42900B07AB7 /* RegionCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,12 +25,13 @@
 		42F5423E1CFA6D5A00BE8549 /* ChildOnBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOnBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F542411CFA6D5A00BE8549 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		42F542461CFA6D5A00BE8549 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		42F542481CFA6D5A00BE8549 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		42F542481CFA6D5A00BE8549 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = ChildOnBoard/Assets.xcassets; sourceTree = "<group>"; };
 		42F5424D1CFA6D5A00BE8549 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		42F542531CFA6E0D00BE8549 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		42F542561CFA7A6C00BE8549 /* MainTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTVC.swift; path = ../MainTVC.swift; sourceTree = "<group>"; };
 		42F542581CFA839600BE8549 /* MonitoredRegionsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MonitoredRegionsTVC.swift; path = ../MonitoredRegionsTVC.swift; sourceTree = "<group>"; };
 		42F5425A1CFA843300BE8549 /* EditRegionTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditRegionTVC.swift; sourceTree = "<group>"; };
+		42FE93D21CFFA42900B07AB7 /* RegionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RegionCell.swift; path = ../RegionCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +50,7 @@
 			isa = PBXGroup;
 			children = (
 				42F542451CFA6D5A00BE8549 /* Main.storyboard */,
+				42F542481CFA6D5A00BE8549 /* Assets.xcassets */,
 				42F542401CFA6D5A00BE8549 /* ChildOnBoard */,
 				42F5423F1CFA6D5A00BE8549 /* Products */,
 			);
@@ -67,9 +70,10 @@
 				42F542561CFA7A6C00BE8549 /* MainTVC.swift */,
 				42F542581CFA839600BE8549 /* MonitoredRegionsTVC.swift */,
 				42F5425A1CFA843300BE8549 /* EditRegionTVC.swift */,
-				4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */,
 				4286B8AF1CFE97FF00B2A9AB /* PreferencesTVC.swift */,
 				42F542411CFA6D5A00BE8549 /* AppDelegate.swift */,
+				4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */,
+				42FE93D21CFFA42900B07AB7 /* RegionCell.swift */,
 				42F542551CFA773D00BE8549 /* Supporting Files */,
 			);
 			path = ChildOnBoard;
@@ -78,7 +82,6 @@
 		42F542551CFA773D00BE8549 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				42F542481CFA6D5A00BE8549 /* Assets.xcassets */,
 				42F5424D1CFA6D5A00BE8549 /* Info.plist */,
 				42F542531CFA6E0D00BE8549 /* MapKit.framework */,
 			);
@@ -167,6 +170,7 @@
 				42F542591CFA839600BE8549 /* MonitoredRegionsTVC.swift in Sources */,
 				42F5425B1CFA843300BE8549 /* EditRegionTVC.swift in Sources */,
 				4286B8B01CFE97FF00B2A9AB /* PreferencesTVC.swift in Sources */,
+				42FE93D31CFFA42900B07AB7 /* RegionCell.swift in Sources */,
 				42F542571CFA7A6C00BE8549 /* MainTVC.swift in Sources */,
 				42F542421CFA6D5A00BE8549 /* AppDelegate.swift in Sources */,
 				4274D4701CFD10AC009889CD /* COBCircularRegion.swift in Sources */,

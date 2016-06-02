@@ -15,6 +15,8 @@ struct Constants{
     static let companionKey = "com.mySmartSoftware.ChildOnBoard.companionKey"
     static let radiusKey = "com.mySmartSoftware.ChildOnBoard.radiusKey"
     static let archiveFilename = "com.mySmartSoftware.ChildOnBoard.archive"
+    static let monitoringRegionsKey = "com.mySmartSoftware.ChildOnBoard.monitoringRegionsKey"
+    static let monitoringVisitsKey = "com.mySmartSoftware.ChildOnBoard.monitoringVisitsKey"
 }
 
 @UIApplicationMain
@@ -23,7 +25,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var window: UIWindow?
     var locationManager = CLLocationManager()
     var companion = "child"
+    var monitoringRegions = false
+    var monitoringVisits = false
 
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        companion = defaults.stringForKey(Constants.companionKey) ?? companion
+        monitoringRegions = defaults.boolForKey(Constants.monitoringRegionsKey)
+        monitoringVisits = defaults.boolForKey(Constants.monitoringVisitsKey)
+        locationManager.delegate = self
+        locationManager.requestAlwaysAuthorization()
+        if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
+            self.application(application, didReceiveLocalNotification: notification)
+        }
+        return true
+    }
+    
     func registerForLocalUserNotification(){
         let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: Set(self.notificationCategories()))
         UIApplication.sharedApplication().registerUserNotificationSettings(settings)
@@ -66,31 +83,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func monitorRegions(regions:[CLCircularRegion]){
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        var notes = [UILocalNotification]()
+        
+//        UIApplication.sharedApplication().cancelAllLocalNotifications()
+//        var notes = [UILocalNotification]()
+//        for region in regions{
+//            let notification = UILocalNotification()
+//            notification.region = region
+//            notification.regionTriggersOnce = false
+//            notification.soundName = UILocalNotificationDefaultSoundName
+//            notification.category = Constants.departureCategory
+//            notification.alertTitle = "Starting a Trip?"
+//            notification.alertBody = String(format: "Do you have your %@ with you?", self.companion)
+//            notes.append(notification)
+//        }
+//        UIApplication.sharedApplication().scheduledLocalNotifications = notes
+        
+        //Now for something completely different - use CLLocation Region Monitoring instead of UILocalNotifications
+        stopMonitoringAllRegions()
         for region in regions{
-            let notification = UILocalNotification()
-            notification.region = region
-            notification.regionTriggersOnce = false
-            notification.soundName = UILocalNotificationDefaultSoundName
-            notification.category = Constants.departureCategory
-            notification.alertTitle = "Starting a Trip?"
-            notification.alertBody = String(format: "Do you have your %@ with you?", self.companion)
-            notes.append(notification)
+            if let reg = region as? COBCircularRegion{
+                if reg.currentlyMonitored {locationManager.startMonitoringForRegion(reg)}
+            }
         }
-        UIApplication.sharedApplication().scheduledLocalNotifications = notes
-    }
-
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        monitoringRegions = true
         let defaults = NSUserDefaults.standardUserDefaults()
-        companion = defaults.stringForKey(Constants.companionKey) ?? companion
-        locationManager.delegate = self
-        locationManager.requestAlwaysAuthorization()
-        if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
-            self.application(application, didReceiveLocalNotification: notification)
+        defaults.setBool(true, forKey: Constants.monitoringRegionsKey)
+    }
+    
+    func stopMonitoringAllRegions(){
+        for region in locationManager.monitoredRegions{
+            locationManager.stopMonitoringForRegion(region)
         }
-        return true
+        monitoringRegions = false
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(false, forKey: Constants.monitoringRegionsKey)
+    }
+    
+    func monitorVisits(){
+        locationManager.startMonitoringVisits()
+        monitoringVisits = true
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(true, forKey: Constants.monitoringVisitsKey)
+    }
+    
+    func stopMonitoringVisits(){
+        locationManager.stopMonitoringVisits()
+        monitoringVisits = false
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setBool(false, forKey: Constants.monitoringVisitsKey)
     }
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
@@ -101,10 +141,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
-    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-
-    }
-    
     func application(application: UIApplication, handleActionWithIdentifier identifier: String?,
                      forLocalNotification notification: UILocalNotification,
                      completionHandler: () -> Void) {
@@ -113,10 +149,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             case Constants.departureCategory:
                 switch ident {
                 case "denied":
-                    locationManager.stopMonitoringVisits()
-                    break
+                    stopMonitoringVisits()
                 case "monitor":
-                    locationManager.startMonitoringVisits()
+                    monitorVisits()
                 default:
                     break
                 }
@@ -126,7 +161,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                     // probably do nothing
                     break
                 case "cancel":
-                    locationManager.stopMonitoringVisits()
+                    stopMonitoringVisits()
                 default:
                     break
                 }
@@ -139,8 +174,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     //MARK: - CLLocationManagerDelegate
     
+    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        let not = UILocalNotification()
+        not.alertTitle = "Starting a Trip?"
+        not.alertBody = String(format: "Shall I remind you about your %@?", companion)
+        not.soundName = UILocalNotificationDefaultSoundName
+        not.category = Constants.departureCategory
+        UIApplication.sharedApplication().presentLocalNotificationNow(not)
+    }
+    
     func locationManager(manager: CLLocationManager, didVisit visit: CLVisit) {
-        // This is how you check for an arrival, there is no departure.
+        // This is how you check for an arrival, there is no departure date.
         if visit.departureDate == NSDate.distantFuture(){
             let not = UILocalNotification()
             not.alertTitle = "Trip done?"
@@ -148,7 +192,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             not.soundName = UILocalNotificationDefaultSoundName
             not.category = Constants.visitCategory
             UIApplication.sharedApplication().presentLocalNotificationNow(not)
-        }// for now we will ignore departures and simply wait for the next visit
+        }
     }
 }
 

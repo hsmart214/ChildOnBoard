@@ -18,10 +18,12 @@ class COBCircularRegion: CLCircularRegion {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         placemark = aDecoder.decodeObjectForKey("placemark") as? MKPlacemark
+        currentlyMonitored = aDecoder.decodeBoolForKey("currentlyMonitored")
     }
     
     override func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeObject(placemark, forKey: "placemark")
+        aCoder.encodeBool(currentlyMonitored, forKey: "currentlyMonitored")
         super.encodeWithCoder(aCoder)
     }
     

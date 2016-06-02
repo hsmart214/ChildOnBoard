@@ -12,6 +12,8 @@ class PreferencesTVC: UITableViewController {
     var defaultRadius = 100
     var defaultCompanion = NSLocalizedString("Child", comment: "Child")
     
+    var radii = [100, 200, 500]
+    
     lazy var companionRows = [NSLocalizedString("Child", comment: "Child") : 0,
                               NSLocalizedString("Baby", comment: "Baby"): 1,
                               NSLocalizedString("Toddler", comment: "Toddler"): 2,
@@ -35,7 +37,16 @@ class PreferencesTVC: UITableViewController {
             let indexPath = NSIndexPath(forRow: row, inSection: section)
             let cell = tableView.cellForRowAtIndexPath(indexPath)
             cell?.accessoryType = .None
-            if row == selectedRow {cell?.accessoryType = .Checkmark}
+            if row == selectedRow {
+                cell?.accessoryType = .Checkmark
+                if section == 0{
+                    // Companion name section
+                    defaultCompanion = cell?.textLabel?.text ?? defaultCompanion
+                }else{
+                    // Radius section
+                    defaultRadius = radii[row]
+                }
+            }
         }
     }
 
@@ -48,6 +59,7 @@ class PreferencesTVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
         let defaults = NSUserDefaults.standardUserDefaults()
         
         defaultRadius = defaults.integerForKey(Constants.radiusKey)

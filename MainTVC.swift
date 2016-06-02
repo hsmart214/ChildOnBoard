@@ -37,20 +37,65 @@ extension UIViewController{
 }
 
 class MainTVC: UITableViewController, EditRegionDelegate {
-    
+    // This is the list of all regions which will be persisted
     var monitoredRegions = [CLCircularRegion]()
+
     weak var appDelegate : AppDelegate?
     @IBOutlet weak var numberOfRegionsLabel: UILabel!
+    @IBOutlet weak var visitMonitoringLabel: UILabel!
+    @IBOutlet weak var regionMonitoringLabel: UILabel!
     
     func updateUI(){
-        //        let notifications = UIApplication.sharedApplication().scheduledLocalNotifications
-        //        let result = String(format: "%d", notifications?.count ?? monitoredRegions.count)
-        numberOfRegionsLabel.text = "\(monitoredRegions.count)"
+        let regs = monitoredRegions as! [COBCircularRegion]
+        var n = regs.filter{$0.currentlyMonitored}.count
+        if let del = appDelegate{
+            if !del.monitoringRegions{ n = 0 }
+        }
+        numberOfRegionsLabel.text = "\(n) of \(monitoredRegions.count)"
+        
+        if let del = appDelegate{
+            if del.monitoringVisits{
+                visitMonitoringLabel.text = NSLocalizedString("Stop Trip Monitoring", comment: "Stop Trip Monitoring")
+            }else{
+                visitMonitoringLabel.text = NSLocalizedString("Start Trip Monitoring", comment: "Start Trip Monitoring")
+            }
+            
+            if del.monitoringRegions{
+                regionMonitoringLabel.text = NSLocalizedString("Stop Region Monitoring", comment: "Stop Region Monitoring")
+            }else{
+                regionMonitoringLabel.text = NSLocalizedString("Start Region Monitoring", comment: "Start Region Monitoring")
+            }
+        }
+    }
+    
+    func toggleRegionMonitoring(){
+        if let del = appDelegate{
+            if del.monitoringRegions{
+                del.stopMonitoringAllRegions()
+            }else{
+                del.monitorRegions(monitoredRegions)
+            }
+        }
+        updateUI()
+    }
+    
+    func toggleVisitMonitoring(){
+        if let del = appDelegate{
+            if del.monitoringVisits{
+                del.stopMonitoringVisits()
+            }else{
+                del.monitorVisits()
+            }
+        }
+        updateUI()
     }
     
     func updateRegion(region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
+        }else{
+            let i = monitoredRegions.indexOf(region)!
+            monitoredRegions.replaceRange(i..<i+1, with: [region])
         }
         self.appDelegate?.monitorRegions(monitoredRegions)
         archiveRegions()
@@ -85,9 +130,9 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         switch indexPath.row {
         case 0,1:
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            toggleRegionMonitoring()
         case 2,3:
-            appDelegate?.locationManager.startMonitoringVisits()
+            toggleVisitMonitoring()
         default:
             break
         }
@@ -119,6 +164,7 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
         let ud = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         if ud.count != 0{
             let userDir = ud[0]

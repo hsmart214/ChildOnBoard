@@ -91,7 +91,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Pv1-NI-tnH" detailTextLabel="VZf-QJ-EC8" style="IBUITableViewCellStyleValue1" id="yjP-nC-eaz">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" textLabel="Pv1-NI-tnH" detailTextLabel="VZf-QJ-EC8" style="IBUITableViewCellStyleValue1" id="yjP-nC-eaz">
                                         <rect key="frame" x="0.0" y="480" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yjP-nC-eaz" id="IHD-QB-9cp">
@@ -114,6 +114,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="WXW-q2-SjL" kind="show" identifier="Region List" id="9A1-QH-dGw"/>
+                                        </connections>
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
@@ -130,15 +133,12 @@
                             </connections>
                         </barButtonItem>
                         <barButtonItem style="plain" systemItem="flexibleSpace" id="0yQ-5p-xdn"/>
-                        <barButtonItem title="Regions" id="njs-VX-rz0">
-                            <connections>
-                                <segue destination="WXW-q2-SjL" kind="show" identifier="Region List" id="Wq7-Uo-rBk"/>
-                            </connections>
-                        </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Child On Board" id="Ff9-AC-spk"/>
                     <connections>
                         <outlet property="numberOfRegionsLabel" destination="VZf-QJ-EC8" id="uaD-4b-zGh"/>
+                        <outlet property="regionMonitoringLabel" destination="z06-gs-4ou" id="dx5-lu-eGW"/>
+                        <outlet property="visitMonitoringLabel" destination="VW2-hJ-wDV" id="VrC-J5-wuJ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Py-zT-YTO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -343,35 +343,108 @@
         <scene sceneID="gWW-ac-PbX">
             <objects>
                 <tableViewController id="WXW-q2-SjL" customClass="MonitoredRegionsTVC" customModule="ChildOnBoard" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Mbm-a8-Wku">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="72" sectionHeaderHeight="28" sectionFooterHeight="28" id="Mbm-a8-Wku">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Region Cell" textLabel="sVC-s3-7Wh" detailTextLabel="lec-8s-0jo" style="IBUITableViewCellStyleValue1" id="YsW-Lf-BTX">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Region Cell" rowHeight="72" id="YsW-Lf-BTX" customClass="RegionCell" customModule="ChildOnBoard" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="72"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YsW-Lf-BTX" id="kSg-bC-6fe">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="71.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Region Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sVC-s3-7Wh">
-                                            <rect key="frame" x="15" y="12" width="97" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVV-Ho-V5I">
+                                            <rect key="frame" x="545" y="8" width="47" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Radius" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lec-8s-0jo">
-                                            <rect key="frame" x="536" y="12" width="49" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11D-y3-5HX">
+                                            <rect key="frame" x="485" y="8" width="52" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGl-9H-xHx">
+                                            <rect key="frame" x="8" y="8" width="103" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lQo-RR-W3X">
+                                            <rect key="frame" x="254" y="33" width="92" height="30"/>
+                                            <state key="normal" title="Notify on Exit"/>
+                                            <connections>
+                                                <action selector="toggleNotify:" destination="YsW-Lf-BTX" eventType="touchUpInside" id="oZT-tO-c9I"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NQ-Ms-GdM">
+                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="4VA-WB-MXw"/>
+                                                <constraint firstAttribute="width" constant="24" id="uS9-BR-q8n"/>
+                                            </constraints>
+                                            <state key="normal" image="Green check"/>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="4VA-WB-MXw"/>
+                                                    <exclude reference="uS9-BR-q8n"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="widthClass=compact">
+                                                <mask key="constraints">
+                                                    <include reference="4VA-WB-MXw"/>
+                                                    <include reference="uS9-BR-q8n"/>
+                                                </mask>
+                                            </variation>
+                                            <connections>
+                                                <action selector="toggleNotify:" destination="YsW-Lf-BTX" eventType="touchUpInside" id="7bZ-JK-LL7"/>
+                                            </connections>
+                                        </button>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="CVV-Ho-V5I" secondAttribute="trailing" id="A7n-8a-unG"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="lQo-RR-W3X" secondAttribute="bottom" constant="0.5" id="TFa-o5-kTG"/>
+                                        <constraint firstItem="4NQ-Ms-GdM" firstAttribute="leading" secondItem="lQo-RR-W3X" secondAttribute="trailing" constant="8" id="XJx-u4-Ogy">
+                                            <variation key="widthClass=compact" constant="8" symbolic="YES"/>
+                                        </constraint>
+                                        <constraint firstAttribute="topMargin" secondItem="CVV-Ho-V5I" secondAttribute="top" id="XSc-U6-YaG"/>
+                                        <constraint firstItem="lQo-RR-W3X" firstAttribute="centerX" secondItem="kSg-bC-6fe" secondAttribute="centerX" id="Za2-gh-Ib0"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="lQo-RR-W3X" secondAttribute="leading" id="a8O-3P-BR9"/>
+                                        <constraint firstItem="4NQ-Ms-GdM" firstAttribute="top" secondItem="lQo-RR-W3X" secondAttribute="top" id="aYC-Dg-HF3"/>
+                                        <constraint firstItem="CVV-Ho-V5I" firstAttribute="leading" secondItem="11D-y3-5HX" secondAttribute="trailing" constant="8" symbolic="YES" id="mm7-DO-3nV"/>
+                                        <constraint firstAttribute="leadingMargin" secondItem="OGl-9H-xHx" secondAttribute="leading" id="oGO-7z-9G4"/>
+                                        <constraint firstAttribute="topMargin" secondItem="OGl-9H-xHx" secondAttribute="top" id="zIL-T7-HrN"/>
+                                        <constraint firstItem="11D-y3-5HX" firstAttribute="baseline" secondItem="CVV-Ho-V5I" secondAttribute="baseline" id="zZ6-me-ZrL"/>
+                                    </constraints>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="4NQ-Ms-GdM"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="a8O-3P-BR9"/>
+                                            <exclude reference="XJx-u4-Ogy"/>
+                                            <exclude reference="aYC-Dg-HF3"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="4NQ-Ms-GdM"/>
+                                        </mask>
+                                        <mask key="constraints">
+                                            <exclude reference="Za2-gh-Ib0"/>
+                                            <include reference="a8O-3P-BR9"/>
+                                            <include reference="XJx-u4-Ogy"/>
+                                            <include reference="aYC-Dg-HF3"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="checkMarkButton" destination="4NQ-Ms-GdM" id="MWx-OC-cnJ"/>
+                                    <outlet property="nameLabel" destination="OGl-9H-xHx" id="dS4-TC-c77"/>
+                                    <outlet property="radiusLabel" destination="CVV-Ho-V5I" id="27K-Me-CNf"/>
                                     <segue destination="tLI-Lu-b71" kind="presentation" identifier="Edit Region" id="FE7-PM-zhx"/>
                                 </connections>
                             </tableViewCell>
@@ -528,6 +601,7 @@
                     <connections>
                         <outlet property="mapView" destination="FBU-a8-kmC" id="wgB-Mv-YYL"/>
                         <outlet property="regionNameTextField" destination="o5y-z4-m5S" id="yEn-tw-fnK"/>
+                        <outlet property="saveButton" destination="e9w-8c-mCm" id="xDl-hO-RBu"/>
                         <outlet property="searchBar" destination="GvH-tB-QTb" id="ZDK-jO-BEn"/>
                     </connections>
                 </tableViewController>
@@ -585,6 +659,7 @@
     <resources>
         <image name="BabyOnBoard" width="256" height="256"/>
         <image name="CarSeat" width="66" height="66"/>
+        <image name="Green check" width="30" height="27"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="0ic-Yn-xa2"/>

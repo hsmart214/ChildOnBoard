@@ -9,14 +9,23 @@
 import UIKit
 import CoreLocation
 
-class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
+class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCellDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
     var delegate : EditRegionDelegate?
+    
+    func toggleMonitoringForRegion(region : COBCircularRegion){
+        region.currentlyMonitored = !region.currentlyMonitored
+        tableView.reloadData()
+        updateRegion(region)
+    }
 
     func updateRegion(region: CLCircularRegion){
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
+        }else{
+            let i = monitoredRegions.indexOf(region)!
+            monitoredRegions.replaceRange(i..<i+1, with: [region])
         }
         delegate?.updateRegion(region)
     }
@@ -36,9 +45,9 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Region Cell", forIndexPath: indexPath)
-        cell.textLabel?.text = monitoredRegions[indexPath.row].identifier
-        cell.detailTextLabel?.text = "\(monitoredRegions[indexPath.row].radius) m"
+        let cell = tableView.dequeueReusableCellWithIdentifier("Region Cell", forIndexPath: indexPath) as! RegionCell
+        cell.region = monitoredRegions[indexPath.row] as? COBCircularRegion
+        cell.delegate = self
         return cell
     }
     
@@ -75,6 +84,11 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate {
                 break
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
     }
     
     override func viewWillAppear(animated: Bool) {

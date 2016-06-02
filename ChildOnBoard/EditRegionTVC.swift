@@ -40,10 +40,9 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     var geocoder = CLGeocoder()
     
     @IBOutlet weak var regionNameTextField: UITextField!
-    
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
-    
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     //MARK: - Map View Delegate
     
@@ -55,14 +54,10 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
         mapView.showAnnotations(mapView.annotations, animated: true)
     }
     
-//    func mapView(mapView: MKMapView, didUpdateUserLocation userLocation: MKUserLocation) {
-//        myLocation = userLocation.location?.coordinate
-//        mapView.region = MKCoordinateRegionMakeWithDistance(myLocation!, defaultEdge, defaultEdge)
-//    }
-    
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         location = view.annotation?.coordinate
         placemark = view.annotation as? MKPlacemark // this will correctly nil out the placemark if one is not available
+        if let name = regionNameTextField.text where name != "" {saveButton.enabled = true}
     }
     
     //MARK: - Search Bar Delegate
@@ -74,6 +69,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.text = nil
         searchBar.resignFirstResponder()
+        cancel(searchBar)
     }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
@@ -108,6 +104,12 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     }
     //MARK: - Text Field Delegate
     
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        if textField.text == nil {saveButton.enabled = false}
+        if let text = textField.text {saveButton.enabled = (text != "" && location != nil)}
+        return true
+    }
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
@@ -136,15 +138,17 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
         if let reg = region{
             mapView.showsUserLocation = false
             let span = MKCoordinateRegionMakeWithDistance(reg.center, defaultEdge, defaultEdge)
             mapView.region = span
             mapView.addAnnotation(reg.placemark ?? reg)
             regionNameTextField.text = reg.identifier
+            saveButton.enabled = true
         }else{
             mapView.showsUserLocation = true
+            saveButton.enabled = false
         }
         let defaults = NSUserDefaults.standardUserDefaults()
         defaultRadius = CLLocationDistance(defaults.integerForKey(Constants.radiusKey))
@@ -161,7 +165,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     }
     
     @IBAction func save(sender: AnyObject) {
-        if let name = regionNameTextField.text{
+        if let name = regionNameTextField.text {
             if let loc = location{
                 let reg = COBCircularRegion(center: loc, radius: defaultRadius, identifier: name)
                 reg.notifyOnExit = true
