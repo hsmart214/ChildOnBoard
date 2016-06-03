@@ -17,6 +17,7 @@ struct Constants{
     static let archiveFilename = "com.mySmartSoftware.ChildOnBoard.archive"
     static let monitoringRegionsKey = "com.mySmartSoftware.ChildOnBoard.monitoringRegionsKey"
     static let monitoringVisitsKey = "com.mySmartSoftware.ChildOnBoard.monitoringVisitsKey"
+    static let redundantNoticePreferenceKey = "com.mySmartSoftware.ChildOnBoard.redundantNoticePreferenceKey"
 }
 
 @UIApplicationMain
@@ -27,12 +28,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var companion = "child"
     var monitoringRegions = false
     var monitoringVisits = false
+    var postRedundantNotices = true
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let defaults = NSUserDefaults.standardUserDefaults()
         companion = defaults.stringForKey(Constants.companionKey) ?? companion
         monitoringRegions = defaults.boolForKey(Constants.monitoringRegionsKey)
         monitoringVisits = defaults.boolForKey(Constants.monitoringVisitsKey)
+        if defaults.valueForKey(Constants.redundantNoticePreferenceKey) == nil{
+            defaults.setBool(true, forKey: Constants.redundantNoticePreferenceKey)
+        }else{
+            postRedundantNotices = defaults.boolForKey(Constants.redundantNoticePreferenceKey)
+        }
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
         if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
@@ -175,6 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     //MARK: - CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+        if monitoringVisits && !postRedundantNotices { return }// per the user's preference
         let not = UILocalNotification()
         not.alertTitle = "Starting a Trip?"
         not.alertBody = String(format: "Shall I remind you about your %@?", companion)

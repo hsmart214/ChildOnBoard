@@ -12,6 +12,7 @@ class PreferencesTVC: UITableViewController {
     var defaultRadius = 100
     var defaultCompanion = NSLocalizedString("Child", comment: "Child")
     
+    @IBOutlet weak var redundancySwitch: UISwitch!
     var radii = [100, 200, 500]
     
     lazy var companionRows = [NSLocalizedString("Child", comment: "Child") : 0,
@@ -25,6 +26,7 @@ class PreferencesTVC: UITableViewController {
                                 NSLocalizedString("Toddler", comment: "Toddler"),
                                 NSLocalizedString("Dog", comment: "Dog"),
                                 NSLocalizedString("Pet", comment: "Pet")]
+    
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -54,6 +56,7 @@ class PreferencesTVC: UITableViewController {
         let defaults = NSUserDefaults.standardUserDefaults()
         defaults.setObject(defaultCompanion, forKey: Constants.companionKey)
         defaults.setInteger(defaultRadius, forKey: Constants.radiusKey)
+        defaults.setBool(redundancySwitch.on, forKey: Constants.redundantNoticePreferenceKey)
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -88,6 +91,7 @@ class PreferencesTVC: UITableViewController {
         if let selectedCompanionRow = companionRows[defaultCompanion]{
             setCheckmarkForRow(selectedCompanionRow, inSection: 0)
         }
+        redundancySwitch.setOn(defaults.boolForKey(Constants.redundantNoticePreferenceKey), animated: true)
     }
 
 }

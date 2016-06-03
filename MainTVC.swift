@@ -44,6 +44,7 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     @IBOutlet weak var numberOfRegionsLabel: UILabel!
     @IBOutlet weak var visitMonitoringLabel: UILabel!
     @IBOutlet weak var regionMonitoringLabel: UILabel!
+    var observer : NSObjectProtocol?
     
     func updateUI(){
         let regs = monitoredRegions as! [COBCircularRegion]
@@ -173,5 +174,18 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         }
         appDelegate?.monitorRegions(monitoredRegions)
         updateUI()
+        weak var myWeakSelf = self
+        observer = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: nil){
+            notification in
+            dispatch_async(dispatch_get_main_queue()){
+                myWeakSelf?.updateUI()
+            }
+        }
+    }
+    
+    deinit{
+        if observer != nil{
+            NSNotificationCenter.defaultCenter().removeObserver(observer!)
+        }
     }
 }

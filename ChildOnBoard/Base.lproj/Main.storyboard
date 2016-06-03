@@ -41,8 +41,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Region Monitoring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z06-gs-4ou">
-                                                    <rect key="frame" x="209" y="11" width="182" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Location Monitoring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z06-gs-4ou">
+                                                    <rect key="frame" x="203" y="11" width="194.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -78,8 +78,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Visit Monitoring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW2-hJ-wDV">
-                                                    <rect key="frame" x="219" y="11" width="162" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Trip Monitoring" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VW2-hJ-wDV">
+                                                    <rect key="frame" x="221" y="11" width="158.5" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -95,18 +95,18 @@
                                         <rect key="frame" x="0.0" y="480" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yjP-nC-eaz" id="IHD-QB-9cp">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="567" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Regions Monitored" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pv1-NI-tnH">
-                                                    <rect key="frame" x="15" y="12" width="136.5" height="19.5"/>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Locations Monitored" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Pv1-NI-tnH">
+                                                    <rect key="frame" x="15" y="12" width="148.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Number" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="VZf-QJ-EC8">
-                                                    <rect key="frame" x="526.5" y="12" width="58.5" height="19.5"/>
+                                                    <rect key="frame" x="506.5" y="12" width="58.5" height="19.5"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                     <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
@@ -264,7 +264,7 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
-                            <tableViewSection headerTitle="Monitoring distance" footerTitle="Larger means fewer notices" id="Wq3-9R-yMr">
+                            <tableViewSection headerTitle="Monitoring distance" footerTitle="Larger distance = fewer notices" id="Wq3-9R-yMr">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="BAr-i0-x6d" style="IBUITableViewCellStyleDefault" id="ESg-sh-LdJ">
                                         <rect key="frame" x="0.0" y="340" width="600" height="44"/>
@@ -319,6 +319,35 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection footerTitle="When visit monitoring is already on" id="QBJ-m0-rRI">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="N44-QN-FrZ">
+                                        <rect key="frame" x="0.0" y="500" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="N44-QN-FrZ" id="wiA-bt-1mx">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="X0O-fs-Cef">
+                                                    <rect key="frame" x="543" y="6" width="51" height="31"/>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Redundant departure notices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lwY-eX-xLH">
+                                                    <rect key="frame" x="8" y="11" width="224" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="X0O-fs-Cef" firstAttribute="centerY" secondItem="wiA-bt-1mx" secondAttribute="centerY" id="NEe-Qo-Lbz"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="X0O-fs-Cef" secondAttribute="trailing" id="Pmm-rG-dGT"/>
+                                                <constraint firstAttribute="leadingMargin" secondItem="lwY-eX-xLH" secondAttribute="leading" id="Vk6-Ed-Txt"/>
+                                                <constraint firstItem="lwY-eX-xLH" firstAttribute="centerY" secondItem="wiA-bt-1mx" secondAttribute="centerY" id="yXg-kT-mZO"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="n9w-Ie-zqT" id="OJl-TD-3Oi"/>
@@ -334,12 +363,15 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Preferences" id="MEu-jt-QdZ"/>
+                    <connections>
+                        <outlet property="redundancySwitch" destination="X0O-fs-Cef" id="bGm-DF-lt0"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FG9-qw-52e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-170" y="1199"/>
         </scene>
-        <!--Monitored Regions-->
+        <!--Monitored Locations-->
         <scene sceneID="gWW-ac-PbX">
             <objects>
                 <tableViewController id="WXW-q2-SjL" customClass="MonitoredRegionsTVC" customModule="ChildOnBoard" customModuleProvider="target" sceneMemberID="viewController">
@@ -361,14 +393,14 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Radius" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11D-y3-5HX">
-                                            <rect key="frame" x="485" y="8" width="52" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11D-y3-5HX">
+                                            <rect key="frame" x="470" y="8" width="67" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGl-9H-xHx">
-                                            <rect key="frame" x="8" y="8" width="103" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGl-9H-xHx">
+                                            <rect key="frame" x="8" y="8" width="115" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
@@ -381,9 +413,11 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4NQ-Ms-GdM">
-                                            <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                            <rect key="frame" x="354" y="33" width="24" height="24"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="24" id="4VA-WB-MXw"/>
+                                                <constraint firstAttribute="width" constant="24" id="Oax-ma-hcJ"/>
+                                                <constraint firstAttribute="height" constant="24" id="PQj-q1-6mh"/>
                                                 <constraint firstAttribute="width" constant="24" id="uS9-BR-q8n"/>
                                             </constraints>
                                             <state key="normal" image="Green check"/>
@@ -406,12 +440,14 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="CVV-Ho-V5I" secondAttribute="trailing" id="A7n-8a-unG"/>
+                                        <constraint firstItem="4NQ-Ms-GdM" firstAttribute="top" secondItem="lQo-RR-W3X" secondAttribute="top" id="Fbz-TZ-Hbx"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="lQo-RR-W3X" secondAttribute="bottom" constant="0.5" id="TFa-o5-kTG"/>
                                         <constraint firstItem="4NQ-Ms-GdM" firstAttribute="leading" secondItem="lQo-RR-W3X" secondAttribute="trailing" constant="8" id="XJx-u4-Ogy">
                                             <variation key="widthClass=compact" constant="8" symbolic="YES"/>
                                         </constraint>
                                         <constraint firstAttribute="topMargin" secondItem="CVV-Ho-V5I" secondAttribute="top" id="XSc-U6-YaG"/>
                                         <constraint firstItem="lQo-RR-W3X" firstAttribute="centerX" secondItem="kSg-bC-6fe" secondAttribute="centerX" id="Za2-gh-Ib0"/>
+                                        <constraint firstItem="4NQ-Ms-GdM" firstAttribute="leading" secondItem="lQo-RR-W3X" secondAttribute="trailing" constant="8" id="Zwd-k7-WuN"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="lQo-RR-W3X" secondAttribute="leading" id="a8O-3P-BR9"/>
                                         <constraint firstItem="4NQ-Ms-GdM" firstAttribute="top" secondItem="lQo-RR-W3X" secondAttribute="top" id="aYC-Dg-HF3"/>
                                         <constraint firstItem="CVV-Ho-V5I" firstAttribute="leading" secondItem="11D-y3-5HX" secondAttribute="trailing" constant="8" symbolic="YES" id="mm7-DO-3nV"/>
@@ -420,9 +456,6 @@
                                         <constraint firstItem="11D-y3-5HX" firstAttribute="baseline" secondItem="CVV-Ho-V5I" secondAttribute="baseline" id="zZ6-me-ZrL"/>
                                     </constraints>
                                     <variation key="default">
-                                        <mask key="subviews">
-                                            <exclude reference="4NQ-Ms-GdM"/>
-                                        </mask>
                                         <mask key="constraints">
                                             <exclude reference="a8O-3P-BR9"/>
                                             <exclude reference="XJx-u4-Ogy"/>
@@ -455,7 +488,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Monitored Regions" id="h2S-gS-CR0">
+                    <navigationItem key="navigationItem" title="Monitored Locations" id="h2S-gS-CR0">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="4lz-V0-WD1">
                             <connections>
                                 <segue destination="tLI-Lu-b71" kind="presentation" identifier="Add Region" id="0ic-Yn-xa2"/>
@@ -467,7 +500,7 @@
             </objects>
             <point key="canvasLocation" x="564" y="1199"/>
         </scene>
-        <!--Add/Edit Region-->
+        <!--Add/Edit Monitored Location-->
         <scene sceneID="Jct-MZ-4m4">
             <objects>
                 <tableViewController storyboardIdentifier="AddEditRegion" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QfF-ur-aRw" customClass="EditRegionTVC" customModule="ChildOnBoard" customModuleProvider="target" sceneMemberID="viewController">
@@ -476,7 +509,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
-                            <tableViewSection headerTitle="Region Name Goes Here" footerTitle="Tap the location to monitor" id="jys-Ma-TG2">
+                            <tableViewSection headerTitle="Location Name Goes Here" footerTitle="Tap the location to monitor" id="jys-Ma-TG2">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="44" id="45G-8I-vLl">
                                         <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -597,7 +630,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Add/Edit Region" id="9CW-Fm-eyY"/>
+                    <navigationItem key="navigationItem" title="Add/Edit Monitored Location" id="9CW-Fm-eyY"/>
                     <connections>
                         <outlet property="mapView" destination="FBU-a8-kmC" id="wgB-Mv-YYL"/>
                         <outlet property="regionNameTextField" destination="o5y-z4-m5S" id="yEn-tw-fnK"/>
