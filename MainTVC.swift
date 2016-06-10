@@ -70,11 +70,15 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     }
     
     func toggleRegionMonitoring(){
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
         if let del = appDelegate{
             if del.monitoringRegions{
                 del.stopMonitoringAllRegions()
+                defaults.setBool(false, forKey: Constants.regionMonitoringOnAtStartKey)
             }else{
                 del.monitorRegions(monitoredRegions)
+                defaults.setBool(true, forKey: Constants.regionMonitoringOnAtStartKey)
             }
         }
         updateUI()
@@ -172,13 +176,16 @@ class MainTVC: UITableViewController, EditRegionDelegate {
             let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
             monitoredRegions = NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURL.path!) as? [COBCircularRegion] ?? [CLCircularRegion]()
         }
+            
         appDelegate?.monitorRegions(monitoredRegions)
+        if let monitoring = appDelegate?.regionMonitoringOnAtStart where !monitoring {
+            appDelegate?.stopMonitoringAllRegions()
+        }
         updateUI()
-        weak var myWeakSelf = self
-        observer = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: nil){
-            notification in
+        observer = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: nil){ [weak self]
+            _ in
             dispatch_async(dispatch_get_main_queue()){
-                myWeakSelf?.updateUI()
+                self?.updateUI()
             }
         }
     }
@@ -187,5 +194,6 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         if observer != nil{
             NSNotificationCenter.defaultCenter().removeObserver(observer!)
         }
+        observer = nil
     }
 }

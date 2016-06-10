@@ -18,6 +18,7 @@ struct Constants{
     static let monitoringRegionsKey = "com.mySmartSoftware.ChildOnBoard.monitoringRegionsKey"
     static let monitoringVisitsKey = "com.mySmartSoftware.ChildOnBoard.monitoringVisitsKey"
     static let redundantNoticePreferenceKey = "com.mySmartSoftware.ChildOnBoard.redundantNoticePreferenceKey"
+    static let regionMonitoringOnAtStartKey = "com.mySmartSoftware.ChildOnBoard.regionMonitoringOnAtStartKey"
 }
 
 @UIApplicationMain
@@ -29,12 +30,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var monitoringRegions = false
     var monitoringVisits = false
     var postRedundantNotices = true
+    var regionMonitoringOnAtStart = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         let defaults = NSUserDefaults.standardUserDefaults()
         companion = defaults.stringForKey(Constants.companionKey) ?? companion
         monitoringRegions = defaults.boolForKey(Constants.monitoringRegionsKey)
         monitoringVisits = defaults.boolForKey(Constants.monitoringVisitsKey)
+        regionMonitoringOnAtStart = defaults.boolForKey(Constants.regionMonitoringOnAtStartKey)
         if defaults.valueForKey(Constants.redundantNoticePreferenceKey) == nil{
             defaults.setBool(true, forKey: Constants.redundantNoticePreferenceKey)
         }else{

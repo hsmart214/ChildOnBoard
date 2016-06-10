@@ -47,18 +47,21 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "1X.png",
       "extent" : "full-screen",
       "scale" : "1x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "4S-1.png",
       "extent" : "full-screen",
       "scale" : "2x"
     },
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "5S-1.png",
       "extent" : "full-screen",
       "subtype" : "retina4",
       "scale" : "2x"
