@@ -43,8 +43,24 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var radiusSegmentedControl: UISegmentedControl!
     
     //MARK: - Map View Delegate
+    
+    @IBAction func radiusChanged(sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            defaultRadius = 100
+        case 1:
+            defaultRadius = 200
+        case 2:
+            defaultRadius = 500
+        default:
+            defaultRadius = 100
+        }
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setInteger(Int(defaultRadius), forKey: Constants.radiusKey)
+    }
     
     func findMyLocation(){
         myLocation = locationManager.location
@@ -74,6 +90,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        mapView.showsUserLocation = false
         if let addy = searchBar.text{
             var rgn : CLCircularRegion
             if let loc = myLocation?.coordinate{
@@ -139,6 +156,7 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
+        let defaults = NSUserDefaults.standardUserDefaults()
         if let reg = region{
             mapView.showsUserLocation = false
             let span = MKCoordinateRegionMakeWithDistance(reg.center, defaultEdge, defaultEdge)
@@ -146,15 +164,25 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
             mapView.addAnnotation(reg.placemark ?? reg)
             regionNameTextField.text = reg.identifier
             saveButton.enabled = true
+            defaultRadius = reg.radius
         }else{
             mapView.showsUserLocation = true
             saveButton.enabled = false
+            defaultRadius = CLLocationDistance(defaults.integerForKey(Constants.radiusKey))
+            if defaultRadius == 0 {
+                defaultRadius = 100
+                defaults.setInteger(100, forKey: Constants.radiusKey)
+            }
         }
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaultRadius = CLLocationDistance(defaults.integerForKey(Constants.radiusKey))
-        if defaultRadius == 0 {
-            defaultRadius = 100
-            defaults.setInteger(100, forKey: Constants.radiusKey)
+        switch defaultRadius {
+        case 100:
+            self.radiusSegmentedControl.selectedSegmentIndex = 0
+        case 200:
+            self.radiusSegmentedControl.selectedSegmentIndex = 1
+        case 500:
+            self.radiusSegmentedControl.selectedSegmentIndex = 2
+        default:
+            self.radiusSegmentedControl.selectedSegmentIndex = 0
         }
     }
     

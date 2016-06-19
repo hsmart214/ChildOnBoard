@@ -166,7 +166,7 @@
             </objects>
             <point key="canvasLocation" x="-170" y="419"/>
         </scene>
-        <!--Preferences-->
+        <!--ChildOnBoard 1.0.3-->
         <scene sceneID="WPK-by-6Yx">
             <objects>
                 <tableViewController id="n9w-Ie-zqT" customClass="PreferencesTVC" customModule="ChildOnBoard" customModuleProvider="target" sceneMemberID="viewController">
@@ -362,7 +362,7 @@
                             </connections>
                         </barButtonItem>
                     </toolbarItems>
-                    <navigationItem key="navigationItem" title="Preferences" id="MEu-jt-QdZ"/>
+                    <navigationItem key="navigationItem" title="ChildOnBoard 1.0.3" id="MEu-jt-QdZ"/>
                     <connections>
                         <outlet property="redundancySwitch" destination="X0O-fs-Cef" id="bGm-DF-lt0"/>
                     </connections>
@@ -505,7 +505,7 @@
             <objects>
                 <tableViewController storyboardIdentifier="AddEditRegion" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QfF-ur-aRw" customClass="EditRegionTVC" customModule="ChildOnBoard" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="70h-04-mzM">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <sections>
@@ -534,15 +534,15 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="300" id="BJ4-Eo-dBF">
-                                        <rect key="frame" x="0.0" y="136" width="600" height="300"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="256" id="BJ4-Eo-dBF">
+                                        <rect key="frame" x="0.0" y="136" width="600" height="256"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BJ4-Eo-dBF" id="SZQ-SP-nlH">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="299.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="255.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FBU-a8-kmC">
-                                                    <rect key="frame" x="8" y="8" width="584" height="283.5"/>
+                                                    <rect key="frame" x="8" y="8" width="584" height="240"/>
                                                     <gestureRecognizers/>
                                                     <connections>
                                                         <outlet property="delegate" destination="QfF-ur-aRw" id="UMK-fP-3oz"/>
@@ -562,7 +562,7 @@
                             <tableViewSection headerTitle="Provide a name for this location" id="6t5-t6-bA6">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Hr6-b7-jAp">
-                                        <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                        <rect key="frame" x="0.0" y="448" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Hr6-b7-jAp" id="3zi-DX-MCb">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -603,6 +603,49 @@
                                             </variation>
                                         </tableViewCellContentView>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Pi8-He-7sb">
+                                        <rect key="frame" x="0.0" y="492" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pi8-He-7sb" id="W6s-Vz-HZP">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Distance Trigger:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3H-jl-rS8">
+                                                    <rect key="frame" x="8" y="11" width="131" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ShV-Y5-5lm">
+                                                    <rect key="frame" x="147" y="8" width="437" height="29"/>
+                                                    <segments>
+                                                        <segment title="100 m"/>
+                                                        <segment title="200 m"/>
+                                                        <segment title="500 m"/>
+                                                    </segments>
+                                                    <connections>
+                                                        <action selector="radiusChanged:" destination="QfF-ur-aRw" eventType="valueChanged" id="mlE-gm-lR9"/>
+                                                    </connections>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ShV-Y5-5lm" firstAttribute="centerY" secondItem="W6s-Vz-HZP" secondAttribute="centerY" id="25B-TI-Qqe"/>
+                                                <constraint firstItem="y3H-jl-rS8" firstAttribute="leading" secondItem="W6s-Vz-HZP" secondAttribute="leadingMargin" id="9eQ-rV-qcr"/>
+                                                <constraint firstItem="y3H-jl-rS8" firstAttribute="top" secondItem="W6s-Vz-HZP" secondAttribute="topMargin" constant="3" id="Rvv-ml-Mol"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="ShV-Y5-5lm" secondAttribute="trailing" constant="8" id="adv-fw-q9j"/>
+                                                <constraint firstItem="y3H-jl-rS8" firstAttribute="leading" secondItem="W6s-Vz-HZP" secondAttribute="leadingMargin" constant="-3" id="h1Z-E7-ZsB"/>
+                                                <constraint firstItem="y3H-jl-rS8" firstAttribute="leading" secondItem="W6s-Vz-HZP" secondAttribute="leadingMargin" constant="-3" id="l2h-ZP-vVI"/>
+                                                <constraint firstItem="ShV-Y5-5lm" firstAttribute="leading" secondItem="y3H-jl-rS8" secondAttribute="trailing" constant="8" symbolic="YES" id="r82-7h-iHA"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="y3H-jl-rS8" secondAttribute="bottom" constant="4" id="tAa-od-DX3"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="h1Z-E7-ZsB"/>
+                                                    <exclude reference="l2h-ZP-vVI"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </cells>
                             </tableViewSection>
                         </sections>
@@ -631,8 +674,11 @@
                         </barButtonItem>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Add/Edit Monitored Location" id="9CW-Fm-eyY"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="800"/>
                     <connections>
                         <outlet property="mapView" destination="FBU-a8-kmC" id="wgB-Mv-YYL"/>
+                        <outlet property="radiusSegmentedControl" destination="ShV-Y5-5lm" id="BWe-Mz-DmA"/>
                         <outlet property="regionNameTextField" destination="o5y-z4-m5S" id="yEn-tw-fnK"/>
                         <outlet property="saveButton" destination="e9w-8c-mCm" id="xDl-hO-RBu"/>
                         <outlet property="searchBar" destination="GvH-tB-QTb" id="ZDK-jO-BEn"/>

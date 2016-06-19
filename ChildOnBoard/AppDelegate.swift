@@ -18,7 +18,6 @@ struct Constants{
     static let monitoringRegionsKey = "com.mySmartSoftware.ChildOnBoard.monitoringRegionsKey"
     static let monitoringVisitsKey = "com.mySmartSoftware.ChildOnBoard.monitoringVisitsKey"
     static let redundantNoticePreferenceKey = "com.mySmartSoftware.ChildOnBoard.redundantNoticePreferenceKey"
-    static let regionMonitoringOnAtStartKey = "com.mySmartSoftware.ChildOnBoard.regionMonitoringOnAtStartKey"
 }
 
 @UIApplicationMain
@@ -37,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         companion = defaults.stringForKey(Constants.companionKey) ?? companion
         monitoringRegions = defaults.boolForKey(Constants.monitoringRegionsKey)
         monitoringVisits = defaults.boolForKey(Constants.monitoringVisitsKey)
-        regionMonitoringOnAtStart = defaults.boolForKey(Constants.regionMonitoringOnAtStartKey)
         if defaults.valueForKey(Constants.redundantNoticePreferenceKey) == nil{
             defaults.setBool(true, forKey: Constants.redundantNoticePreferenceKey)
         }else{
@@ -93,22 +91,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     }
     
     func monitorRegions(regions:[CLCircularRegion]){
-        
-//        UIApplication.sharedApplication().cancelAllLocalNotifications()
-//        var notes = [UILocalNotification]()
-//        for region in regions{
-//            let notification = UILocalNotification()
-//            notification.region = region
-//            notification.regionTriggersOnce = false
-//            notification.soundName = UILocalNotificationDefaultSoundName
-//            notification.category = Constants.departureCategory
-//            notification.alertTitle = "Starting a Trip?"
-//            notification.alertBody = String(format: "Do you have your %@ with you?", self.companion)
-//            notes.append(notification)
-//        }
-//        UIApplication.sharedApplication().scheduledLocalNotifications = notes
-        
-        //Now for something completely different - use CLLocation Region Monitoring instead of UILocalNotifications
         stopMonitoringAllRegions()
         for region in regions{
             if let reg = region as? COBCircularRegion{
@@ -116,8 +98,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
         }
         monitoringRegions = true
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: Constants.monitoringRegionsKey)
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: Constants.monitoringRegionsKey)
     }
     
     func stopMonitoringAllRegions(){
@@ -125,22 +106,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             locationManager.stopMonitoringForRegion(region)
         }
         monitoringRegions = false
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(false, forKey: Constants.monitoringRegionsKey)
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: Constants.monitoringRegionsKey)
     }
     
     func monitorVisits(){
         locationManager.startMonitoringVisits()
         monitoringVisits = true
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(true, forKey: Constants.monitoringVisitsKey)
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: Constants.monitoringVisitsKey)
     }
     
     func stopMonitoringVisits(){
         locationManager.stopMonitoringVisits()
         monitoringVisits = false
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setBool(false, forKey: Constants.monitoringVisitsKey)
+        NSUserDefaults.standardUserDefaults().setBool(false, forKey: Constants.monitoringVisitsKey)
     }
 
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {

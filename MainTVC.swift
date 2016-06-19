@@ -69,16 +69,12 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         }
     }
     
-    func toggleRegionMonitoring(){
-        let defaults = NSUserDefaults.standardUserDefaults()
-        
+    func toggleRegionMonitoring(){        
         if let del = appDelegate{
             if del.monitoringRegions{
                 del.stopMonitoringAllRegions()
-                defaults.setBool(false, forKey: Constants.regionMonitoringOnAtStartKey)
             }else{
                 del.monitorRegions(monitoredRegions)
-                defaults.setBool(true, forKey: Constants.regionMonitoringOnAtStartKey)
             }
         }
         updateUI()
@@ -177,8 +173,9 @@ class MainTVC: UITableViewController, EditRegionDelegate {
             monitoredRegions = NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURL.path!) as? [COBCircularRegion] ?? [CLCircularRegion]()
         }
             
-        appDelegate?.monitorRegions(monitoredRegions)
-        if let monitoring = appDelegate?.regionMonitoringOnAtStart where !monitoring {
+        if appDelegate!.monitoringRegions {
+            appDelegate?.monitorRegions(monitoredRegions)
+        }else{
             appDelegate?.stopMonitoringAllRegions()
         }
         updateUI()
