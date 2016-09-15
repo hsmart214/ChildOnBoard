@@ -20,6 +20,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4261497E1D20A3F100937FAA /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main.strings"; sourceTree = "<group>"; };
 		4274D46F1CFD10AC009889CD /* COBCircularRegion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = COBCircularRegion.swift; sourceTree = "<group>"; };
 		4286B8AF1CFE97FF00B2A9AB /* PreferencesTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreferencesTVC.swift; path = ../PreferencesTVC.swift; sourceTree = "<group>"; };
 		42F5423E1CFA6D5A00BE8549 /* ChildOnBoard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChildOnBoard.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,6 +122,7 @@
 					42F5423D1CFA6D5A00BE8549 = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = TY3543425A;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -184,6 +186,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				42F542461CFA6D5A00BE8549 /* Base */,
+				4261497E1D20A3F100937FAA /* es-MX */,
 			);
 			name = Main.storyboard;
 			path = ChildOnBoard;
@@ -286,6 +289,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mySmartSoftware.ChildOnBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -299,6 +303,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mySmartSoftware.ChildOnBoard;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

@@ -31,97 +31,97 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     var postRedundantNotices = true
     var regionMonitoringOnAtStart = false
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        companion = defaults.stringForKey(Constants.companionKey) ?? companion
-        monitoringRegions = defaults.boolForKey(Constants.monitoringRegionsKey)
-        monitoringVisits = defaults.boolForKey(Constants.monitoringVisitsKey)
-        if defaults.valueForKey(Constants.redundantNoticePreferenceKey) == nil{
-            defaults.setBool(true, forKey: Constants.redundantNoticePreferenceKey)
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let defaults = UserDefaults.standard
+        companion = defaults.string(forKey: Constants.companionKey) ?? companion
+        monitoringRegions = defaults.bool(forKey: Constants.monitoringRegionsKey)
+        monitoringVisits = defaults.bool(forKey: Constants.monitoringVisitsKey)
+        if defaults.value(forKey: Constants.redundantNoticePreferenceKey) == nil{
+            defaults.set(true, forKey: Constants.redundantNoticePreferenceKey)
         }else{
-            postRedundantNotices = defaults.boolForKey(Constants.redundantNoticePreferenceKey)
+            postRedundantNotices = defaults.bool(forKey: Constants.redundantNoticePreferenceKey)
         }
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
-        if let notification = launchOptions?[UIApplicationLaunchOptionsLocalNotificationKey] as? UILocalNotification {
-            self.application(application, didReceiveLocalNotification: notification)
+        if let notification = launchOptions?[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification {
+            self.application(application, didReceive: notification)
         }
         return true
     }
     
     func registerForLocalUserNotification(){
-        let settings = UIUserNotificationSettings(forTypes: [.Alert, .Sound], categories: Set(self.notificationCategories()))
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        let settings = UIUserNotificationSettings(types: [.alert, .sound], categories: Set(self.notificationCategories()))
+        UIApplication.shared.registerUserNotificationSettings(settings)
     }
     
     func notificationCategories() -> [UIUserNotificationCategory]{
         let act1 = UIMutableUserNotificationAction()
         act1.title = "Continue Monitoring"
-        act1.activationMode = .Background
+        act1.activationMode = .background
         act1.identifier = "continue"
-        act1.destructive = false
+        act1.isDestructive = false
         
         let act2 = UIMutableUserNotificationAction()
         act2.title = "End Trip"
-        act2.activationMode = .Background
+        act2.activationMode = .background
         act2.identifier = "cancel"
-        act2.destructive = true
+        act2.isDestructive = true
         
         let cat1 = UIMutableUserNotificationCategory()
         cat1.identifier = Constants.visitCategory
-        cat1.setActions([act1, act2], forContext: .Default)
+        cat1.setActions([act1, act2], for: .default)
         
         let act3 = UIMutableUserNotificationAction()
         act3.title = "Yes"
-        act3.activationMode = .Background
+        act3.activationMode = .background
         act3.identifier = "monitor"
-        act3.destructive = false
+        act3.isDestructive = false
         
         let act4 = UIMutableUserNotificationAction()
         act4.title = "No, thanks"
-        act4.activationMode = .Background
+        act4.activationMode = .background
         act4.identifier = "denied"
-        act4.destructive = true
+        act4.isDestructive = true
         
         let cat2 = UIMutableUserNotificationCategory()
         cat2.identifier = Constants.departureCategory
-        cat2.setActions([act3, act4], forContext: .Default)
+        cat2.setActions([act3, act4], for: .default)
         
         return [cat1, cat2]
     }
     
-    func monitorRegions(regions:[CLCircularRegion]){
+    func monitorRegions(_ regions:[CLCircularRegion]){
         stopMonitoringAllRegions()
         for region in regions{
             if let reg = region as? COBCircularRegion{
-                if reg.currentlyMonitored {locationManager.startMonitoringForRegion(reg)}
+                if reg.currentlyMonitored {locationManager.startMonitoring(for: reg)}
             }
         }
         monitoringRegions = true
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: Constants.monitoringRegionsKey)
+        UserDefaults.standard.set(true, forKey: Constants.monitoringRegionsKey)
     }
     
     func stopMonitoringAllRegions(){
         for region in locationManager.monitoredRegions{
-            locationManager.stopMonitoringForRegion(region)
+            locationManager.stopMonitoring(for: region)
         }
         monitoringRegions = false
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: Constants.monitoringRegionsKey)
+        UserDefaults.standard.set(false, forKey: Constants.monitoringRegionsKey)
     }
     
     func monitorVisits(){
         locationManager.startMonitoringVisits()
         monitoringVisits = true
-        NSUserDefaults.standardUserDefaults().setBool(true, forKey: Constants.monitoringVisitsKey)
+        UserDefaults.standard.set(true, forKey: Constants.monitoringVisitsKey)
     }
     
     func stopMonitoringVisits(){
         locationManager.stopMonitoringVisits()
         monitoringVisits = false
-        NSUserDefaults.standardUserDefaults().setBool(false, forKey: Constants.monitoringVisitsKey)
+        UserDefaults.standard.set(false, forKey: Constants.monitoringVisitsKey)
     }
 
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         if notification.category == Constants.departureCategory{
             print("Regular Local Notification for departure")
         }else if notification.category == Constants.visitCategory{
@@ -129,10 +129,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         }
     }
     
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?,
-                     forLocalNotification notification: UILocalNotification,
-                     completionHandler: () -> Void) {
-        if let cat = notification.category, ident = identifier{
+    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?,
+                     for notification: UILocalNotification,
+                     completionHandler: @escaping () -> Void) {
+        if let cat = notification.category, let ident = identifier{
             switch cat {
             case Constants.departureCategory:
                 switch ident {
@@ -162,25 +162,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     //MARK: - CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager, didExitRegion region: CLRegion) {
+    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
         if monitoringVisits && !postRedundantNotices { return }// per the user's preference
         let not = UILocalNotification()
         not.alertTitle = "Starting a Trip?"
         not.alertBody = String(format: "Shall I remind you about your %@?", companion)
         not.soundName = UILocalNotificationDefaultSoundName
         not.category = Constants.departureCategory
-        UIApplication.sharedApplication().presentLocalNotificationNow(not)
+        UIApplication.shared.presentLocalNotificationNow(not)
     }
     
-    func locationManager(manager: CLLocationManager, didVisit visit: CLVisit) {
+    func locationManager(_ manager: CLLocationManager, didVisit visit: CLVisit) {
         // This is how you check for an arrival, there is no departure date.
-        if visit.departureDate == NSDate.distantFuture(){
+        if visit.departureDate == Date.distantFuture{
             let not = UILocalNotification()
             not.alertTitle = "Trip done?"
             not.alertBody = String(format: "Check the back seat for your %@", companion)
             not.soundName = UILocalNotificationDefaultSoundName
             not.category = Constants.visitCategory
-            UIApplication.sharedApplication().presentLocalNotificationNow(not)
+            UIApplication.shared.presentLocalNotificationNow(not)
         }
     }
 }

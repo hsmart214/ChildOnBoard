@@ -14,55 +14,55 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
     var monitoredRegions = [CLCircularRegion]()
     var delegate : EditRegionDelegate?
     
-    func toggleMonitoringForRegion(region : COBCircularRegion){
+    func toggleMonitoringForRegion(_ region : COBCircularRegion){
         region.currentlyMonitored = !region.currentlyMonitored
         tableView.reloadData()
         updateRegion(region)
     }
 
-    func updateRegion(region: CLCircularRegion){
+    func updateRegion(_ region: CLCircularRegion){
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
         }else{
-            let i = monitoredRegions.indexOf(region)!
-            monitoredRegions.replaceRange(i..<i+1, with: [region])
+            let i = monitoredRegions.index(of: region)!
+            monitoredRegions.replaceSubrange(i..<i+1, with: [region])
         }
         delegate?.updateRegion(region)
     }
     
-    func removeRegion(region: CLCircularRegion){
+    func removeRegion(_ region: CLCircularRegion){
         delegate?.removeRegion(region)
     }
     
     //MARK: - UITableViewDataSource
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return monitoredRegions.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Region Cell", forIndexPath: indexPath) as! RegionCell
-        cell.region = monitoredRegions[indexPath.row] as? COBCircularRegion
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Region Cell", for: indexPath) as! RegionCell
+        cell.region = monitoredRegions[(indexPath as NSIndexPath).row] as? COBCircularRegion
         cell.delegate = self
         return cell
     }
     
     //MARK: - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete{
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete{
             tableView.beginUpdates()
-            delegate?.removeRegion(monitoredRegions[indexPath.row])
-            monitoredRegions.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+            delegate?.removeRegion(monitoredRegions[(indexPath as NSIndexPath).row])
+            monitoredRegions.remove(at: (indexPath as NSIndexPath).row)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.reloadData()
             tableView.endUpdates()
         }
@@ -70,12 +70,12 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
     
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let identifier = segue.identifier, dest = segue.destinationViewController.contentViewController as? EditRegionTVC {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let identifier = segue.identifier, let dest = segue.destination.contentViewController as? EditRegionTVC {
             switch identifier {
             case "Edit Region":
                 dest.delegate = self
-                if let cell = sender as? UITableViewCell, index = self.tableView.indexPathForCell(cell)?.row{
+                if let cell = sender as? UITableViewCell, let index = (self.tableView.indexPath(for: cell) as NSIndexPath?)?.row{
                     dest.region = monitoredRegions[index] as? COBCircularRegion
                 }
             case "Add Region":
@@ -91,7 +91,7 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
         self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tableView.reloadData()
     }

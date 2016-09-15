@@ -28,19 +28,19 @@ class PreferencesTVC: UITableViewController {
                                 NSLocalizedString("Pet", comment: "Pet")]
     
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        setCheckmarkForRow(indexPath.row, inSection: indexPath.section)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        setCheckmarkForRow((indexPath as NSIndexPath).row, inSection: (indexPath as NSIndexPath).section)
     }
     
-    func setCheckmarkForRow(selectedRow: Int, inSection section: Int){
-        let numRows = tableView.numberOfRowsInSection(section)
+    func setCheckmarkForRow(_ selectedRow: Int, inSection section: Int){
+        let numRows = tableView.numberOfRows(inSection: section)
         for row in 0..<numRows{
-            let indexPath = NSIndexPath(forRow: row, inSection: section)
-            let cell = tableView.cellForRowAtIndexPath(indexPath)
-            cell?.accessoryType = .None
+            let indexPath = IndexPath(row: row, section: section)
+            let cell = tableView.cellForRow(at: indexPath)
+            cell?.accessoryType = .none
             if row == selectedRow {
-                cell?.accessoryType = .Checkmark
+                cell?.accessoryType = .checkmark
                 if section == 0{
                     // Companion name section
                     defaultCompanion = cell?.textLabel?.text ?? defaultCompanion
@@ -52,23 +52,23 @@ class PreferencesTVC: UITableViewController {
         }
     }
 
-    @IBAction func done(sender: AnyObject) {
-        let defaults = NSUserDefaults.standardUserDefaults()
-        defaults.setObject(defaultCompanion, forKey: Constants.companionKey)
-        defaults.setInteger(defaultRadius, forKey: Constants.radiusKey)
-        defaults.setBool(redundancySwitch.on, forKey: Constants.redundantNoticePreferenceKey)
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+    @IBAction func done(_ sender: AnyObject) {
+        let defaults = UserDefaults.standard
+        defaults.set(defaultCompanion, forKey: Constants.companionKey)
+        defaults.set(defaultRadius, forKey: Constants.radiusKey)
+        defaults.set(redundancySwitch.isOn, forKey: Constants.redundantNoticePreferenceKey)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
-        let defaults = NSUserDefaults.standardUserDefaults()
+        let defaults = UserDefaults.standard
         
-        defaultRadius = defaults.integerForKey(Constants.radiusKey)
+        defaultRadius = defaults.integer(forKey: Constants.radiusKey)
         if defaultRadius == 0{
             defaultRadius = 100
-            defaults.setInteger(100, forKey: Constants.radiusKey)
+            defaults.set(100, forKey: Constants.radiusKey)
         }
         var row = 0
         switch defaultRadius {
@@ -83,7 +83,7 @@ class PreferencesTVC: UITableViewController {
         }
         setCheckmarkForRow(row, inSection: 1)
         
-        if let comp = defaults.stringForKey(Constants.companionKey){
+        if let comp = defaults.string(forKey: Constants.companionKey){
             defaultCompanion = comp
         }else{
             defaultCompanion = "Child"
@@ -91,7 +91,7 @@ class PreferencesTVC: UITableViewController {
         if let selectedCompanionRow = companionRows[defaultCompanion]{
             setCheckmarkForRow(selectedCompanionRow, inSection: 0)
         }
-        redundancySwitch.setOn(defaults.boolForKey(Constants.redundantNoticePreferenceKey), animated: true)
+        redundancySwitch.setOn(defaults.bool(forKey: Constants.redundantNoticePreferenceKey), animated: true)
     }
 
 }

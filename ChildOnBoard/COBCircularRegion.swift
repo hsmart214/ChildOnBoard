@@ -17,14 +17,14 @@ class COBCircularRegion: CLCircularRegion {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        placemark = aDecoder.decodeObjectForKey("placemark") as? MKPlacemark
-        currentlyMonitored = aDecoder.decodeBoolForKey("currentlyMonitored")
+        placemark = aDecoder.decodeObject(forKey: "placemark") as? MKPlacemark
+        currentlyMonitored = aDecoder.decodeBool(forKey: "currentlyMonitored")
     }
     
-    override func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeObject(placemark, forKey: "placemark")
-        aCoder.encodeBool(currentlyMonitored, forKey: "currentlyMonitored")
-        super.encodeWithCoder(aCoder)
+    override func encode(with aCoder: NSCoder) {
+        aCoder.encode(placemark, forKey: "placemark")
+        aCoder.encode(currentlyMonitored, forKey: "currentlyMonitored")
+        super.encode(with: aCoder)
     }
     
     override init(center: CLLocationCoordinate2D, radius: CLLocationDistance, identifier: String) {

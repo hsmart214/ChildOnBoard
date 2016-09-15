@@ -20,7 +20,7 @@ class RegionCell: UITableViewCell {
     @IBOutlet weak var radiusLabel: UILabel!
     @IBOutlet weak var checkMarkButton: UIButton!
 
-    @IBAction func toggleNotify(sender: AnyObject) {
+    @IBAction func toggleNotify(_ sender: AnyObject) {
         if region != nil{
             delegate?.toggleMonitoringForRegion(region!)
         }
@@ -36,9 +36,9 @@ class RegionCell: UITableViewCell {
             }
             if let mon = region?.currentlyMonitored{
                 if mon{
-                    checkMarkButton.hidden = false
+                    checkMarkButton.isHidden = false
                 }else{
-                    checkMarkButton.hidden = true
+                    checkMarkButton.isHidden = true
                 }
             }
         }

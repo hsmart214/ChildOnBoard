@@ -91,20 +91,20 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         updateUI()
     }
     
-    func updateRegion(region: CLCircularRegion) {
+    func updateRegion(_ region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
         }else{
-            let i = monitoredRegions.indexOf(region)!
-            monitoredRegions.replaceRange(i..<i+1, with: [region])
+            let i = monitoredRegions.index(of: region)!
+            monitoredRegions.replaceSubrange(i..<i+1, with: [region])
         }
         self.appDelegate?.monitorRegions(monitoredRegions)
         archiveRegions()
     }
     
-    func removeRegion(region: CLCircularRegion) {
-        if let index = monitoredRegions.indexOf(region){
-            monitoredRegions.removeAtIndex(index)
+    func removeRegion(_ region: CLCircularRegion) {
+        if let index = monitoredRegions.index(of: region){
+            monitoredRegions.remove(at: index)
         }
         self.appDelegate?.monitorRegions(monitoredRegions)
         archiveRegions()
@@ -112,24 +112,24 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     
     func archiveRegions(){
         let mRegions = monitoredRegions // make an immutable copy to pass to the closure
-        dispatch_async(dispatch_get_global_queue(QOS_CLASS_DEFAULT, 0)){
-            let ud = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        DispatchQueue.global(qos: DispatchQoS.QoSClass.default).async{
+            let ud = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
             if ud.count != 0{
                 let userDir = ud[0]
-                let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
-                NSKeyedArchiver.archiveRootObject(mRegions, toFile: archiveURL.path!)
+                let archiveURL = userDir.appendingPathComponent(Constants.archiveFilename)
+                NSKeyedArchiver.archiveRootObject(mRegions, toFile: archiveURL.path)
             }
         }
     }
 
     // MARK: - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if let delegate = UIApplication.sharedApplication().delegate as? AppDelegate{
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let delegate = UIApplication.shared.delegate as? AppDelegate{
             delegate.registerForLocalUserNotification()
         }
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        switch indexPath.row {
+        tableView.deselectRow(at: indexPath, animated: true)
+        switch (indexPath as NSIndexPath).row {
         case 0,1:
             toggleRegionMonitoring()
         case 2,3:
@@ -143,11 +143,11 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let indentifier = segue.identifier{
             switch indentifier{
             case "Region List":
-                if let dest = segue.destinationViewController.contentViewController as? MonitoredRegionsTVC{
+                if let dest = segue.destination.contentViewController as? MonitoredRegionsTVC{
                     dest.monitoredRegions = monitoredRegions
                     dest.delegate = self
                 }
@@ -157,20 +157,20 @@ class MainTVC: UITableViewController, EditRegionDelegate {
         }
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         updateUI()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        appDelegate = UIApplication.sharedApplication().delegate as? AppDelegate
+        appDelegate = UIApplication.shared.delegate as? AppDelegate
         self.tableView.backgroundView = UIImageView(image: UIImage(named: "Green"))
-        let ud = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let ud = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         if ud.count != 0{
             let userDir = ud[0]
-            let archiveURL = userDir.URLByAppendingPathComponent(Constants.archiveFilename)
-            monitoredRegions = NSKeyedUnarchiver.unarchiveObjectWithFile(archiveURL.path!) as? [COBCircularRegion] ?? [CLCircularRegion]()
+            let archiveURL = userDir.appendingPathComponent(Constants.archiveFilename)
+            monitoredRegions = NSKeyedUnarchiver.unarchiveObject(withFile: archiveURL.path) as? [COBCircularRegion] ?? [CLCircularRegion]()
         }
             
         if appDelegate!.monitoringRegions {
@@ -179,9 +179,9 @@ class MainTVC: UITableViewController, EditRegionDelegate {
             appDelegate?.stopMonitoringAllRegions()
         }
         updateUI()
-        observer = NSNotificationCenter.defaultCenter().addObserverForName(UIApplicationWillEnterForegroundNotification, object: nil, queue: nil){ [weak self]
+        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil){ [weak self]
             _ in
-            dispatch_async(dispatch_get_main_queue()){
+            DispatchQueue.main.async{
                 self?.updateUI()
             }
         }
@@ -189,7 +189,7 @@ class MainTVC: UITableViewController, EditRegionDelegate {
     
     deinit{
         if observer != nil{
-            NSNotificationCenter.defaultCenter().removeObserver(observer!)
+            NotificationCenter.default.removeObserver(observer!)
         }
         observer = nil
     }

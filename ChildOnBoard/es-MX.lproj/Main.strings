@@ -1,0 +1,117 @@
+
+/* Class = "UILabel"; text = "200 m"; ObjectID = "0ol-gD-sRb"; */
+"0ol-gD-sRb.text" = "200 m";
+
+/* Class = "UILabel"; text = "Distance"; ObjectID = "11D-y3-5HX"; */
+"11D-y3-5HX.text" = "Distáncia";
+
+/* Class = "UINavigationController"; title = "Child On Board"; ObjectID = "3CK-bP-w2Y"; */
+"3CK-bP-w2Y.title" = "Child On Board";
+
+/* Class = "UITableViewSection"; headerTitle = "Provide a name for this location"; ObjectID = "6t5-t6-bA6"; */
+"6t5-t6-bA6.headerTitle" = "Dar un nombre a este lugar";
+
+/* Class = "UINavigationItem"; title = "Add/Edit Monitored Location"; ObjectID = "9CW-Fm-eyY"; */
+"9CW-Fm-eyY.title" = "Add/Edit Monitored Location";
+
+/* Class = "UILabel"; text = "Pet"; ObjectID = "9n1-xN-HIF"; */
+"9n1-xN-HIF.text" = "Pet";
+
+/* Class = "UILabel"; text = "100 m"; ObjectID = "BAr-i0-x6d"; */
+"BAr-i0-x6d.text" = "100 m";
+
+/* Class = "UILabel"; text = "500 m"; ObjectID = "CIg-dy-EwP"; */
+"CIg-dy-EwP.text" = "500 m";
+
+/* Class = "UILabel"; text = "100 m"; ObjectID = "CVV-Ho-V5I"; */
+"CVV-Ho-V5I.text" = "100 m";
+
+/* Class = "UIBarButtonItem"; title = "Locate Me"; ObjectID = "EJU-4w-INc"; */
+"EJU-4w-INc.title" = "Mi lugar";
+
+/* Class = "UINavigationItem"; title = "Child On Board"; ObjectID = "Ff9-AC-spk"; */
+"Ff9-AC-spk.title" = "Child On Board";
+
+/* Class = "UIBarButtonItem"; title = "Prefs"; ObjectID = "GQX-Ok-iOJ"; */
+"GQX-Ok-iOJ.title" = "Prefs";
+
+/* Class = "UISearchBar"; placeholder = "Search Address"; ObjectID = "GvH-tB-QTb"; */
+"GvH-tB-QTb.placeholder" = "Dirección a buscar";
+
+/* Class = "UITableViewController"; title = "Child On Board"; ObjectID = "IeD-8l-pvh"; */
+"IeD-8l-pvh.title" = "Child On Board";
+
+/* Class = "UINavigationItem"; title = "ChildOnBoard 1.0.3"; ObjectID = "MEu-jt-QdZ"; */
+"MEu-jt-QdZ.title" = "ChildOnBoard 1.0.3";
+
+/* Class = "UILabel"; text = "Location Name"; ObjectID = "OGl-9H-xHx"; */
+"OGl-9H-xHx.text" = "Nobre de lugar";
+
+/* Class = "UILabel"; text = "Locations Monitored"; ObjectID = "Pv1-NI-tnH"; */
+"Pv1-NI-tnH.text" = "Lugares monitoriados";
+
+/* Class = "UITableViewSection"; footerTitle = "When visit monitoring is already on"; ObjectID = "QBJ-m0-rRI"; */
+"QBJ-m0-rRI.footerTitle" = "Cuando los lugares están monitoriados";
+
+/* Class = "UILabel"; text = "Dog"; ObjectID = "Rod-Ch-702"; */
+"Rod-Ch-702.text" = "Dog";
+
+/* Class = "UISegmentedControl"; ShV-Y5-5lm.segmentTitles[0] = "100 m"; ObjectID = "ShV-Y5-5lm"; */
+"ShV-Y5-5lm.segmentTitles[0]" = "100 m";
+
+/* Class = "UISegmentedControl"; ShV-Y5-5lm.segmentTitles[1] = "200 m"; ObjectID = "ShV-Y5-5lm"; */
+"ShV-Y5-5lm.segmentTitles[1]" = "200 m";
+
+/* Class = "UISegmentedControl"; ShV-Y5-5lm.segmentTitles[2] = "500 m"; ObjectID = "ShV-Y5-5lm"; */
+"ShV-Y5-5lm.segmentTitles[2]" = "500 m";
+
+/* Class = "UILabel"; text = "Child"; ObjectID = "V3T-dS-qId"; */
+"V3T-dS-qId.text" = "Child";
+
+/* Class = "UILabel"; text = "Toddler"; ObjectID = "VOC-4A-Pgd"; */
+"VOC-4A-Pgd.text" = "Toddler";
+
+/* Class = "UILabel"; text = "Start Trip Monitoring"; ObjectID = "VW2-hJ-wDV"; */
+"VW2-hJ-wDV.text" = "Start Trip Monitoring";
+
+/* Class = "UILabel"; text = "Number"; ObjectID = "VZf-QJ-EC8"; */
+"VZf-QJ-EC8.text" = "Number";
+
+/* Class = "UITableViewSection"; footerTitle = "Larger distance = fewer notices"; ObjectID = "Wq3-9R-yMr"; */
+"Wq3-9R-yMr.footerTitle" = "Larger distance = fewer notices";
+
+/* Class = "UITableViewSection"; headerTitle = "Monitoring distance"; ObjectID = "Wq3-9R-yMr"; */
+"Wq3-9R-yMr.headerTitle" = "Monitoring distance";
+
+/* Class = "UITableViewSection"; headerTitle = "Companion"; ObjectID = "fmO-xT-6g5"; */
+"fmO-xT-6g5.headerTitle" = "Companion";
+
+/* Class = "UINavigationItem"; title = "Monitored Locations"; ObjectID = "h2S-gS-CR0"; */
+"h2S-gS-CR0.title" = "Monitored Locations";
+
+/* Class = "UILabel"; text = "Baby"; ObjectID = "je0-aQ-2bt"; */
+"je0-aQ-2bt.text" = "Baby";
+
+/* Class = "UITableViewSection"; footerTitle = "Tap the location to monitor"; ObjectID = "jys-Ma-TG2"; */
+"jys-Ma-TG2.footerTitle" = "Tap the location to monitor";
+
+/* Class = "UITableViewSection"; headerTitle = "Location Name Goes Here"; ObjectID = "jys-Ma-TG2"; */
+"jys-Ma-TG2.headerTitle" = "Location Name Goes Here";
+
+/* Class = "UIButton"; normalTitle = "Notify on Exit"; ObjectID = "lQo-RR-W3X"; */
+"lQo-RR-W3X.normalTitle" = "Notify on Exit";
+
+/* Class = "UILabel"; text = "Redundant departure notices"; ObjectID = "lwY-eX-xLH"; */
+"lwY-eX-xLH.text" = "Redundant departure notices";
+
+/* Class = "UITextField"; placeholder = "Home, Daycare, Work, etc."; ObjectID = "o5y-z4-m5S"; */
+"o5y-z4-m5S.placeholder" = "Home, Daycare, Work, etc.";
+
+/* Class = "UILabel"; text = "Name"; ObjectID = "v6b-UL-epl"; */
+"v6b-UL-epl.text" = "Name";
+
+/* Class = "UILabel"; text = "Distance Trigger:"; ObjectID = "y3H-jl-rS8"; */
+"y3H-jl-rS8.text" = "Distance Trigger:";
+
+/* Class = "UILabel"; text = "Start Location Monitoring"; ObjectID = "z06-gs-4ou"; */
+"z06-gs-4ou.text" = "Start Location Monitoring";
