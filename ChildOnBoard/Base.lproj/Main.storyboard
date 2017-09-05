@@ -379,50 +379,58 @@
         <scene sceneID="gWW-ac-PbX">
             <objects>
                 <tableViewController id="WXW-q2-SjL" customClass="MonitoredRegionsTVC" customModule="ChildOnBoard" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="437" sectionHeaderHeight="28" sectionFooterHeight="28" id="Mbm-a8-Wku">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="435" sectionHeaderHeight="28" sectionFooterHeight="28" id="Mbm-a8-Wku">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="separatorColor" red="0.0" green="0.31307025550000001" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Region Cell" rowHeight="437" id="YsW-Lf-BTX" customClass="RegionCell" customModule="ChildOnBoard" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="437"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Region Cell" rowHeight="435" id="YsW-Lf-BTX" customClass="RegionCell" customModule="ChildOnBoard" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="435"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YsW-Lf-BTX" id="kSg-bC-6fe">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="436.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="434.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100 m" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CVV-Ho-V5I">
-                                            <rect key="frame" x="320" y="237" width="47" height="21"/>
+                                            <rect key="frame" x="320" y="235.5" width="47" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Distance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="11D-y3-5HX">
-                                            <rect key="frame" x="8" y="237" width="67" height="21"/>
+                                            <rect key="frame" x="8" y="235.5" width="67" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGl-9H-xHx">
-                                            <rect key="frame" x="8" y="8" width="183" height="34"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                            <rect key="frame" x="8" y="8" width="182" height="32"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="26"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g43-jt-i2z">
-                                            <rect key="frame" x="318" y="274" width="51" height="31"/>
+                                            <rect key="frame" x="318" y="272.5" width="51" height="31"/>
                                             <connections>
                                                 <action selector="toggleEnabled" destination="YsW-Lf-BTX" eventType="valueChanged" id="AHD-nn-Kun"/>
                                             </connections>
                                         </switch>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aiu-yI-Qf0">
-                                            <rect key="frame" x="318" y="327.5" width="51" height="31"/>
+                                            <rect key="frame" x="318" y="326" width="51" height="31"/>
                                             <connections>
                                                 <action selector="toggleNotifyOnEntry" destination="YsW-Lf-BTX" eventType="valueChanged" id="qrp-E9-Tc8"/>
                                             </connections>
                                         </switch>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ht1-dK-Crr">
+                                            <rect key="frame" x="318" y="380" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="toggleNotifyExit" destination="YsW-Lf-BTX" eventType="valueChanged" id="Z9a-zc-Mc3"/>
+                                            </connections>
+                                        </switch>
                                         <mapView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" mapType="hybrid" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ypv-Ha-Npg">
-                                            <rect key="frame" x="8" y="50" width="359" height="180"/>
+                                            <rect key="frame" x="8" y="47.5" width="359" height="180"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="180" id="IEU-UT-MGo"/>
                                             </constraints>
@@ -431,7 +439,7 @@
                                             </connections>
                                         </mapView>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Txy-qh-oTS">
-                                            <rect key="frame" x="8" y="320" width="302" height="46"/>
+                                            <rect key="frame" x="8" y="318.5" width="302" height="46"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                             <state key="normal" title="Notify on Arrival"/>
                                             <connections>
@@ -439,7 +447,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OHR-ZO-DCM">
-                                            <rect key="frame" x="8" y="374" width="302" height="46"/>
+                                            <rect key="frame" x="8" y="372.5" width="302" height="46"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                             <state key="normal" title="Notify on Leaving"/>
                                             <connections>
@@ -447,19 +455,13 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v9s-wg-H4H">
-                                            <rect key="frame" x="8" y="266" width="302" height="46"/>
+                                            <rect key="frame" x="8" y="264.5" width="302" height="46"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                             <state key="normal" title="Enabled"/>
                                             <connections>
                                                 <action selector="enableButtonTap" destination="YsW-Lf-BTX" eventType="touchUpInside" id="hW5-gK-a7R"/>
                                             </connections>
                                         </button>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ht1-dK-Crr">
-                                            <rect key="frame" x="318" y="382" width="51" height="31"/>
-                                            <connections>
-                                                <action selector="toggleNotifyExit" destination="YsW-Lf-BTX" eventType="valueChanged" id="Z9a-zc-Mc3"/>
-                                            </connections>
-                                        </switch>
                                     </subviews>
                                     <constraints>
                                         <constraint firstAttribute="trailingMargin" secondItem="ht1-dK-Crr" secondAttribute="trailing" id="09m-yK-nkw"/>
@@ -480,7 +482,7 @@
                                         <constraint firstItem="v9s-wg-H4H" firstAttribute="top" secondItem="11D-y3-5HX" secondAttribute="bottom" constant="8" symbolic="YES" id="gP1-sU-HzQ"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="OGl-9H-xHx" secondAttribute="leading" id="gyQ-Cr-n1r"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="ypv-Ha-Npg" secondAttribute="leading" id="hTH-WK-sbO"/>
-                                        <constraint firstItem="11D-y3-5HX" firstAttribute="top" secondItem="ypv-Ha-Npg" secondAttribute="bottom" constant="7" id="hTe-RR-XkW"/>
+                                        <constraint firstItem="11D-y3-5HX" firstAttribute="top" secondItem="ypv-Ha-Npg" secondAttribute="bottom" constant="8" symbolic="YES" id="hTe-RR-XkW"/>
                                         <constraint firstItem="g43-jt-i2z" firstAttribute="leading" secondItem="v9s-wg-H4H" secondAttribute="trailing" constant="8" symbolic="YES" id="hp2-Ox-lPW"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="Txy-qh-oTS" secondAttribute="leading" id="hs2-GT-01S"/>
                                         <constraint firstItem="g43-jt-i2z" firstAttribute="centerY" secondItem="v9s-wg-H4H" secondAttribute="centerY" id="iiX-aQ-hks"/>
@@ -525,7 +527,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aMo-A9-dry" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="564" y="1198.6506746626687"/>
+            <point key="canvasLocation" x="563.5" y="1198.5"/>
         </scene>
         <!--Add/Edit Monitored Location-->
         <scene sceneID="Jct-MZ-4m4">
