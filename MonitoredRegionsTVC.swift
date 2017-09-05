@@ -8,11 +8,25 @@
 
 import UIKit
 import CoreLocation
+import MapKit
 
 class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCellDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
     var delegate : EditRegionDelegate?
+    var mapType : MKMapType = .standard
+    
+    func toggleEntryForRegion(_ region: COBCircularRegion) {
+        region.notifyOnEntry = !region.notifyOnEntry
+        tableView.reloadData()
+        updateRegion(region)
+    }
+    
+    func toggleExitForRegion(_ region: COBCircularRegion) {
+        region.notifyOnExit = !region.notifyOnExit
+        tableView.reloadData()
+        updateRegion(region)
+    }
     
     func toggleMonitoringForRegion(_ region : COBCircularRegion){
         region.currentlyMonitored = !region.currentlyMonitored
@@ -34,6 +48,56 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
         delegate?.removeRegion(region)
     }
     
+    func changeMapTypePreferenceTo(_ mapTypePreference : MKMapType){
+        let defaults = UserDefaults.standard
+        defaults.set(Int(mapTypePreference.rawValue), forKey: Constants.mapTypePreferenceKey)
+        defaults.synchronize()
+    }
+    
+    @IBAction func changeMapType(_ sender: Any) {
+        let oldMapType = mapType
+        let action1 = UIAlertAction(title: "Standard",
+                                   style: .default)
+        {(act : UIAlertAction) in
+            self.mapType = .standard
+            if self.mapType != oldMapType{
+                self.changeMapTypePreferenceTo(self.mapType)
+                self.tableView.reloadData()
+            }
+        }
+        let action2 = UIAlertAction(title: "Satellite",
+                                    style: .default)
+        {(act : UIAlertAction) in
+            self.mapType = .satellite
+            if self.mapType != oldMapType{
+                self.changeMapTypePreferenceTo(self.mapType)
+                self.tableView.reloadData()
+            }
+        }
+        let action3 = UIAlertAction(title: "Hybrid",
+                                    style: .default)
+        {(act : UIAlertAction) in
+            self.mapType = .hybrid
+            if self.mapType != oldMapType{
+                self.changeMapTypePreferenceTo(self.mapType)
+                self.tableView.reloadData()
+            }
+        }
+        let action4 = UIAlertAction(title: "Cancel",
+                                    style: .cancel,
+                                    handler: nil)
+        
+        let alert = UIAlertController(title: "Map Type",
+                                      message: nil,
+                                      preferredStyle: .actionSheet)
+        alert.addAction(action1)
+        alert.addAction(action2)
+        alert.addAction(action3)
+        alert.addAction(action4)
+        
+        present(alert, animated: true, completion: nil)
+    }
+    
     //MARK: - UITableViewDataSource
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -48,6 +112,7 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
         let cell = tableView.dequeueReusableCell(withIdentifier: "Region Cell", for: indexPath) as! RegionCell
         cell.region = monitoredRegions[(indexPath as NSIndexPath).row] as? COBCircularRegion
         cell.delegate = self
+        cell.mapView.mapType = self.mapType
         return cell
     }
     
@@ -93,6 +158,10 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        let defaults = UserDefaults.standard
+        if let mapPref = MKMapType(rawValue: UInt(defaults.integer(forKey: Constants.mapTypePreferenceKey))){
+            mapType = mapPref
+        }
         self.tableView.reloadData()
     }
 }

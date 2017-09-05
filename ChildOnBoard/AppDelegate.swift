@@ -18,6 +18,7 @@ struct Constants{
     static let monitoringRegionsKey = "com.mySmartSoftware.ChildOnBoard.monitoringRegionsKey"
     static let monitoringVisitsKey = "com.mySmartSoftware.ChildOnBoard.monitoringVisitsKey"
     static let redundantNoticePreferenceKey = "com.mySmartSoftware.ChildOnBoard.redundantNoticePreferenceKey"
+    static let mapTypePreferenceKey = "com.mySmartSoftware.ChildOnBoard.mapTypePreferenceKey"
 }
 
 @UIApplicationMain
@@ -169,6 +170,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         not.alertBody = String(format: "Shall I remind you about your %@?", companion)
         not.soundName = UILocalNotificationDefaultSoundName
         not.category = Constants.departureCategory
+        UIApplication.shared.presentLocalNotificationNow(not)
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
+        let not = UILocalNotification()
+        not.alertTitle = String(format: "Arrived at %@", region.identifier)
+        not.alertBody = String(format: "Check the back seat for your %@?", companion)
+        not.soundName = UILocalNotificationDefaultSoundName
+        not.category = Constants.visitCategory
         UIApplication.shared.presentLocalNotificationNow(not)
     }
     
