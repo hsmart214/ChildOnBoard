@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class COBCircularRegion: CLCircularRegion {
+final class COBCircularRegion: CLCircularRegion {
     
     var placemark : MKPlacemark?
     var currentlyMonitored = true

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PreferencesTVC: UITableViewController {
+final class PreferencesTVC: UITableViewController {
     var defaultRadius = 100
     var defaultCompanion = NSLocalizedString("Child", comment: "Child")
     

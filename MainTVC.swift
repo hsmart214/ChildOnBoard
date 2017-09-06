@@ -36,7 +36,13 @@ extension UIViewController{
     }
 }
 
-class MainTVC: UITableViewController, EditRegionDelegate {
+extension UIColor{
+    public static var COBGreen : UIColor {
+        return UIColor(colorLiteralRed: 0.0, green: 80.0/256.0, blue: 20.0/256.0, alpha: 1.0)
+    }
+}
+
+final class MainTVC: UITableViewController, EditRegionDelegate {
     // This is the list of all regions which will be persisted
     var monitoredRegions = [CLCircularRegion]()
 

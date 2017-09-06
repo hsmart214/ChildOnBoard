@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCellDelegate {
+final class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCellDelegate {
     
     var monitoredRegions = [CLCircularRegion]()
     var delegate : EditRegionDelegate?
@@ -33,13 +33,26 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
         tableView.reloadData()
         updateRegion(region)
     }
+    
+    func change(radius: CLLocationDistance, forRegion region: COBCircularRegion, forCell cell: RegionCell) {
+        let newRegion = COBCircularRegion(center: region.center,
+                                          radius: radius,
+                                          identifier: region.identifier)
+        newRegion.notifyOnExit = region.notifyOnExit
+        newRegion.notifyOnEntry = region.notifyOnEntry
+        newRegion.currentlyMonitored = region.currentlyMonitored
+        newRegion.placemark = region.placemark
+        removeRegion(region)
+        updateRegion(newRegion)
+        cell.region = newRegion // this will trigger the whole didSet on the RegionCell
+    }
 
     func updateRegion(_ region: CLCircularRegion){
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
-        }else{
-            let i = monitoredRegions.index(of: region)!
-            monitoredRegions.replaceSubrange(i..<i+1, with: [region])
+            //        }else{
+            //            let i = monitoredRegions.index(of: region)!
+            //            monitoredRegions.replaceSubrange(i..<i+1, with: [region])
         }
         delegate?.updateRegion(region)
     }
@@ -110,9 +123,9 @@ class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, RegionCell
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Region Cell", for: indexPath) as! RegionCell
-        cell.region = monitoredRegions[(indexPath as NSIndexPath).row] as? COBCircularRegion
         cell.delegate = self
         cell.mapView.mapType = self.mapType
+        cell.region = monitoredRegions[(indexPath as NSIndexPath).row] as? COBCircularRegion
         return cell
     }
     

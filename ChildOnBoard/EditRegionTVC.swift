@@ -19,7 +19,7 @@ extension CLLocation : MKAnnotation{
     
 }
 
-class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
+final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDelegate, MKMapViewDelegate, CLLocationManagerDelegate {
     
     var delegate : EditRegionDelegate?
     let locationManager = CLLocationManager()
@@ -93,8 +93,8 @@ class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFieldDele
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle{
             let rend = MKCircleRenderer(circle: overlay as! MKCircle)
-            rend.lineWidth = 1.0
-            rend.strokeColor = UIColor.blue
+            rend.lineWidth = 2.0
+            rend.strokeColor = UIColor.COBGreen
             return rend
         }
         return MKCircleRenderer()

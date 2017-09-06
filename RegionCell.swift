@@ -13,17 +13,24 @@ protocol RegionCellDelegate{
     func toggleMonitoringForRegion(_:COBCircularRegion)
     func toggleEntryForRegion(_:COBCircularRegion)
     func toggleExitForRegion(_:COBCircularRegion)
+    func change(radius : CLLocationDistance, forRegion region : COBCircularRegion, forCell cell : RegionCell)
     var mapType : MKMapType {get}
 }
 
-class RegionCell: UITableViewCell, MKMapViewDelegate {
+final class RegionCell: UITableViewCell, MKMapViewDelegate {
     
     var delegate : RegionCellDelegate?
     
     var renderer : MKCircleRenderer?
     
+    enum RegionRadius : CLLocationDistance {
+        case Short = 100.0
+        case Medium = 200.0
+        case Long = 500.0
+    }
+    
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var radiusLabel: UILabel!
+    @IBOutlet weak var radiusSegmentedControl: UISegmentedControl!
     
     @IBOutlet weak var enabledSwitch: UISwitch!
     @IBOutlet weak var notifyEntrySwitch: UISwitch!
@@ -33,6 +40,24 @@ class RegionCell: UITableViewCell, MKMapViewDelegate {
     @IBOutlet weak var entryButton: UIButton!
     @IBOutlet weak var exitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    
+    
+    
+    @IBAction func radiusChanged(_ sender: UISegmentedControl) {
+        let oldRadius = region!.radius
+        var newRadius = oldRadius
+        switch sender.selectedSegmentIndex {
+        case 0:
+            newRadius = RegionRadius.Short.rawValue
+        case 1:
+            newRadius = RegionRadius.Medium.rawValue
+        case 2:
+            newRadius = RegionRadius.Long.rawValue
+        default:
+            break
+        }
+        if newRadius == oldRadius {return}
+        delegate?.change(radius: newRadius, forRegion: region!, forCell: self)    }
     
     @IBAction func enableButtonTap() {
         enabledSwitch.setOn(!enabledSwitch.isOn, animated: true)
@@ -85,7 +110,16 @@ class RegionCell: UITableViewCell, MKMapViewDelegate {
         didSet {
             nameLabel.text = region?.identifier
             let rad = region?.radius ?? 0.0
-            radiusLabel.text = "\(Int(rad)) m"
+            switch rad {
+            case 100.0:
+                radiusSegmentedControl.selectedSegmentIndex = 0
+            case 200.0:
+                radiusSegmentedControl.selectedSegmentIndex = 1
+            case 500.0:
+                radiusSegmentedControl.selectedSegmentIndex = 2
+            default:
+                break
+            }
             for overlay in mapView.overlays{
                 mapView.remove(overlay)
             }
@@ -128,8 +162,11 @@ class RegionCell: UITableViewCell, MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle{
             let rend = MKCircleRenderer(circle: overlay as! MKCircle)
-            rend.strokeColor = UIColor.blue
-            rend.lineWidth = 1.0
+            rend.strokeColor = UIColor.COBGreen
+            if mapView.mapType != .standard {
+                rend.strokeColor = UIColor.cyan
+            }
+            rend.lineWidth = 2.0
             return rend
         }
         return MKCircleRenderer()
