@@ -1,5 +1,5 @@
-//
 //  MonitoredRegionsTVC.swift
+//
 //  ChildOnBoard
 //
 //  Created by J. HOWARD SMART on 5/28/16.
@@ -18,22 +18,23 @@ final class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, Regi
     
     func toggleEntryForRegion(_ region: COBCircularRegion) {
         region.notifyOnEntry = !region.notifyOnEntry
-        tableView.reloadData()
         updateRegion(region)
+        tableView.reloadData()
     }
     
     func toggleExitForRegion(_ region: COBCircularRegion) {
         region.notifyOnExit = !region.notifyOnExit
-        tableView.reloadData()
         updateRegion(region)
+        tableView.reloadData()
     }
     
     func toggleMonitoringForRegion(_ region : COBCircularRegion){
         region.currentlyMonitored = !region.currentlyMonitored
-        tableView.reloadData()
         updateRegion(region)
+        tableView.reloadData()
     }
-    
+    // This delegate call back is necessary because the radius of a CLCircularRegion is immutable.
+    // Every time you want to change the radius, you have to create a new copy of the Region and release the old one.
     func change(radius: CLLocationDistance, forRegion region: COBCircularRegion, forCell cell: RegionCell) {
         let newRegion = COBCircularRegion(center: region.center,
                                           radius: radius,
@@ -42,22 +43,30 @@ final class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, Regi
         newRegion.notifyOnEntry = region.notifyOnEntry
         newRegion.currentlyMonitored = region.currentlyMonitored
         newRegion.placemark = region.placemark
-        removeRegion(region)
-        updateRegion(newRegion)
+        replace(region: region, with: newRegion) // now the only reference to the old region should be this local parameter
         cell.region = newRegion // this will trigger the whole didSet on the RegionCell
+        tableView.reloadData()
+    }
+    
+    func replace(region : COBCircularRegion, with newRegion: COBCircularRegion){
+        if let index = monitoredRegions.index(of: region){
+            monitoredRegions.remove(at: index)
+            monitoredRegions.insert(newRegion, at: index)
+        }
+        delegate?.replace(region: region, with: newRegion)
     }
 
     func updateRegion(_ region: CLCircularRegion){
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
-            //        }else{
-            //            let i = monitoredRegions.index(of: region)!
-            //            monitoredRegions.replaceSubrange(i..<i+1, with: [region])
         }
         delegate?.updateRegion(region)
     }
     
     func removeRegion(_ region: CLCircularRegion){
+        if let index = monitoredRegions.index(of: region){
+            monitoredRegions.remove(at: index)
+        }
         delegate?.removeRegion(region)
     }
     

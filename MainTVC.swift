@@ -50,6 +50,9 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
     @IBOutlet weak var numberOfRegionsLabel: UILabel!
     @IBOutlet weak var visitMonitoringLabel: UILabel!
     @IBOutlet weak var regionMonitoringLabel: UILabel!
+    @IBOutlet weak var raysImageView: UIImageView!
+    @IBOutlet weak var carseatImageView: UIImageView!
+    
     var observer : NSObjectProtocol?
     
     func updateUI(){
@@ -63,12 +66,14 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
         if let del = appDelegate{
             if del.monitoringVisits{
                 visitMonitoringLabel.text = NSLocalizedString("Stop Trip Monitoring", comment: "Stop Trip Monitoring")
+                animateCarseat()
             }else{
                 visitMonitoringLabel.text = NSLocalizedString("Start Trip Monitoring", comment: "Start Trip Monitoring")
             }
             
             if del.monitoringRegions{
                 regionMonitoringLabel.text = NSLocalizedString("Stop Region Monitoring", comment: "Stop Region Monitoring")
+                animateRays()
             }else{
                 regionMonitoringLabel.text = NSLocalizedString("Start Region Monitoring", comment: "Start Region Monitoring")
             }
@@ -100,11 +105,16 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
     func updateRegion(_ region: CLCircularRegion) {
         if !monitoredRegions.contains(region){
             monitoredRegions.append(region)
-        }else{
-            let i = monitoredRegions.index(of: region)!
-            monitoredRegions.replaceSubrange(i..<i+1, with: [region])
         }
         self.appDelegate?.monitorRegions(monitoredRegions)
+        archiveRegions()
+    }
+    
+    func replace(region : COBCircularRegion, with newRegion : COBCircularRegion){
+        if let index = monitoredRegions.index(of: region){
+            monitoredRegions.remove(at: index)
+            monitoredRegions.insert(newRegion, at: index)
+        }
         archiveRegions()
     }
     
@@ -167,6 +177,53 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
         super.viewWillAppear(animated)
         updateUI()
     }
+
+    //MARK: - Animations
+    
+    func animateRays(){
+        UIView.animate(withDuration: 1.0,
+                       animations: {
+        self.raysImageView.alpha = 0.0
+        },
+                       completion: {(finished : Bool) in
+                        if finished && self.appDelegate!.monitoringRegions{
+                            UIView.animate(withDuration: 1.0,
+                                           animations: {
+                                            self.raysImageView.alpha = 1.0
+                            },
+                                           completion: {(finished : Bool) in
+                                            if finished && self.view.window != nil{
+                                                self.animateRays()
+                                            }
+                            })
+                        }
+        })
+    }
+    
+    func animateCarseat(){
+        UIView.animate(withDuration: 1.0,
+                       animations: {
+        self.carseatImageView.center.x = 0.0
+        },
+                       completion: {(finished : Bool) in
+                        if finished {
+                            UIView.performWithoutAnimation {
+                                self.carseatImageView.center.x = self.carseatImageView.superview!.bounds.size.width
+                            }
+                            UIView.animate(withDuration: 1.0,
+                                           animations: {
+                                            self.carseatImageView.center.x = self.carseatImageView.superview!.bounds.size.width/2.0
+                            },
+                                           completion: {(finished : Bool) in
+                                            if finished && self.view.window != nil && self.appDelegate!.monitoringVisits{
+                                                self.animateCarseat()
+                                            }
+                            })
+                        }
+        })
+    }
+    
+    //MARK: - View Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -180,9 +237,11 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
         }
             
         if appDelegate!.monitoringRegions {
-            appDelegate?.monitorRegions(monitoredRegions)
+            appDelegate!.monitorRegions(monitoredRegions)
+            animateRays()
         }else{
-            appDelegate?.stopMonitoringAllRegions()
+            appDelegate!.stopMonitoringAllRegions()
+            raysImageView.alpha = 0.0
         }
         updateUI()
         observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil){ [weak self]

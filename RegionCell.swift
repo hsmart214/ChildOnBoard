@@ -20,9 +20,7 @@ protocol RegionCellDelegate{
 final class RegionCell: UITableViewCell, MKMapViewDelegate {
     
     var delegate : RegionCellDelegate?
-    
-    var renderer : MKCircleRenderer?
-    
+        
     enum RegionRadius : CLLocationDistance {
         case Short = 100.0
         case Medium = 200.0
@@ -57,7 +55,8 @@ final class RegionCell: UITableViewCell, MKMapViewDelegate {
             break
         }
         if newRadius == oldRadius {return}
-        delegate?.change(radius: newRadius, forRegion: region!, forCell: self)    }
+        delegate!.change(radius: newRadius, forRegion: region!, forCell: self)
+    }
     
     @IBAction func enableButtonTap() {
         enabledSwitch.setOn(!enabledSwitch.isOn, animated: true)

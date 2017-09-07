@@ -11,6 +11,7 @@ import CoreLocation
 import MapKit
 
 protocol EditRegionDelegate{
+    func replace(region : COBCircularRegion, with newRegion: COBCircularRegion)
     func updateRegion(_:CLCircularRegion)
     func removeRegion(_:CLCircularRegion)
 }
@@ -24,8 +25,8 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
     var delegate : EditRegionDelegate?
     let locationManager = CLLocationManager()
     
-    let defaultEdge = CLLocationDistance(1000)
-    var defaultRadius = CLLocationDistance(100)
+    let defaultEdge = CLLocationDistance(1250.0)
+    var defaultRadius = CLLocationDistance(100.0)
     
     var circle : MKCircle?
     
@@ -52,13 +53,13 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
     @IBAction func radiusChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
-            defaultRadius = 100
+            defaultRadius = CLLocationDistance(100.0)
         case 1:
-            defaultRadius = 200
+            defaultRadius = CLLocationDistance(200.0)
         case 2:
-            defaultRadius = 500
+            defaultRadius = CLLocationDistance(500.0)
         default:
-            defaultRadius = 100
+            defaultRadius = CLLocationDistance(100.0)
         }
         let defaults = UserDefaults.standard
         defaults.set(Int(defaultRadius), forKey: Constants.radiusKey)
@@ -88,6 +89,8 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
         if let name = regionNameTextField.text , name != "" {saveButton.isEnabled = true}
         circle = MKCircle(center: location!, radius: defaultRadius)
         mapView.add(circle!)
+        let span = MKCoordinateRegionMakeWithDistance(location!, defaultEdge, defaultEdge)
+        mapView.region = span
     }
     
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -196,16 +199,16 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
             saveButton.isEnabled = false
             defaultRadius = CLLocationDistance(defaults.integer(forKey: Constants.radiusKey))
             if defaultRadius == 0 {
-                defaultRadius = 100
-                defaults.set(100, forKey: Constants.radiusKey)
+                defaultRadius = CLLocationDistance(100.0)
+                defaults.set(defaultRadius, forKey: Constants.radiusKey)
             }
         }
         switch defaultRadius {
-        case 100:
+        case 100.0:
             self.radiusSegmentedControl.selectedSegmentIndex = 0
-        case 200:
+        case 200.0:
             self.radiusSegmentedControl.selectedSegmentIndex = 1
-        case 500:
+        case 500.0:
             self.radiusSegmentedControl.selectedSegmentIndex = 2
         default:
             self.radiusSegmentedControl.selectedSegmentIndex = 0
