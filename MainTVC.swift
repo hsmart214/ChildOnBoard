@@ -112,8 +112,9 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
     
     func replace(region : COBCircularRegion, with newRegion : COBCircularRegion){
         if let index = monitoredRegions.index(of: region){
-            monitoredRegions.remove(at: index)
-            monitoredRegions.insert(newRegion, at: index)
+//            monitoredRegions.remove(at: index)
+//            monitoredRegions.insert(newRegion, at: index)
+            monitoredRegions[index] = newRegion
         }
         archiveRegions()
     }
