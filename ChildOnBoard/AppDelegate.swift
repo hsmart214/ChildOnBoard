@@ -12,6 +12,7 @@ import CoreLocation
 struct Constants{
     static let visitCategory = "com.mySmartSoftware.ChildOnBoard.visitCategory"
     static let departureCategory = "com.mySmartSoftware.ChildOnBoard.departureCategory"
+    static let arrivalCategory = "com.mySmartSoftware.ChildOnBoard.arrivalCategory"
     static let companionKey = "com.mySmartSoftware.ChildOnBoard.companionKey"
     static let radiusKey = "com.mySmartSoftware.ChildOnBoard.radiusKey"
     static let archiveFilename = "com.mySmartSoftware.ChildOnBoard.archive"
@@ -88,7 +89,17 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
         cat2.identifier = Constants.departureCategory
         cat2.setActions([act3, act4], for: .default)
         
-        return [cat1, cat2]
+        let act5 = UIMutableUserNotificationAction()
+        act5.title = "Dismiss"
+        act5.activationMode = .background
+        act5.identifier = "dismissed"
+        act5.isDestructive = false
+        
+        let cat3 = UIMutableUserNotificationCategory()
+        cat3.identifier = Constants.arrivalCategory
+        cat3.setActions([act5], for: .default)
+        
+        return [cat1, cat2, cat3]
     }
     
     func monitorRegions(_ regions:[CLCircularRegion]){
@@ -100,7 +111,19 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
         }
         monitoringRegions = true
         UserDefaults.standard.set(true, forKey: Constants.monitoringRegionsKey)
+        //        printMonitored(regions: regions)
     }
+    
+//    func printMonitored(regions:[COBCircularRegion]){
+//        for region in regions{
+//            let curr = String(region.currentlyMonitored)
+//            let entry = String(region.notifyOnEntry)
+//            let exit = String(region.notifyOnExit)
+//            let msg = String.localizedStringWithFormat("Region name: %@, currently monitored: %@, arrival: %@, departure: %@", region.identifier, curr, entry, exit)
+//            print(msg)
+//            
+//        }
+//    }
     
     func stopMonitoringAllRegions(){
         for region in locationManager.monitoredRegions{
@@ -154,6 +177,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
                 default:
                     break
                 }
+            case Constants.arrivalCategory:
+                // since the only action is to dismiss
+                // there is nothing to do here
+                break
             default:
                 break
             }
@@ -176,9 +203,9 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         let not = UILocalNotification()
         not.alertTitle = String(format: "Arrived at %@", region.identifier)
-        not.alertBody = String(format: "Check the back seat for your %@?", companion)
+        not.alertBody = String(format: "Check the back seat for your %@.", companion)
         not.soundName = UILocalNotificationDefaultSoundName
-        not.category = Constants.visitCategory
+        not.category = Constants.arrivalCategory
         UIApplication.shared.presentLocalNotificationNow(not)
     }
     

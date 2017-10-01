@@ -54,7 +54,7 @@
 "QBJ-m0-rRI.footerTitle" = "Cuando los lugares están monitoriados";
 
 /* Class = "UILabel"; text = "Dog"; ObjectID = "Rod-Ch-702"; */
-"Rod-Ch-702.text" = "Dog";
+"Rod-Ch-702.text" = "Perro";
 
 /* Class = "UISegmentedControl"; ShV-Y5-5lm.segmentTitles[0] = "100 m"; ObjectID = "ShV-Y5-5lm"; */
 "ShV-Y5-5lm.segmentTitles[0]" = "100 m";
@@ -66,7 +66,7 @@
 "ShV-Y5-5lm.segmentTitles[2]" = "500 m";
 
 /* Class = "UILabel"; text = "Child"; ObjectID = "V3T-dS-qId"; */
-"V3T-dS-qId.text" = "Child";
+"V3T-dS-qId.text" = "Niño";
 
 /* Class = "UILabel"; text = "Toddler"; ObjectID = "VOC-4A-Pgd"; */
 "VOC-4A-Pgd.text" = "Toddler";
@@ -75,7 +75,7 @@
 "VW2-hJ-wDV.text" = "Start Trip Monitoring";
 
 /* Class = "UILabel"; text = "Number"; ObjectID = "VZf-QJ-EC8"; */
-"VZf-QJ-EC8.text" = "Number";
+"VZf-QJ-EC8.text" = "Número";
 
 /* Class = "UITableViewSection"; footerTitle = "Larger distance = fewer notices"; ObjectID = "Wq3-9R-yMr"; */
 "Wq3-9R-yMr.footerTitle" = "Larger distance = fewer notices";
@@ -90,7 +90,7 @@
 "h2S-gS-CR0.title" = "Monitored Locations";
 
 /* Class = "UILabel"; text = "Baby"; ObjectID = "je0-aQ-2bt"; */
-"je0-aQ-2bt.text" = "Baby";
+"je0-aQ-2bt.text" = "Bebé";
 
 /* Class = "UITableViewSection"; footerTitle = "Tap the location to monitor"; ObjectID = "jys-Ma-TG2"; */
 "jys-Ma-TG2.footerTitle" = "Tap the location to monitor";
@@ -108,7 +108,7 @@
 "o5y-z4-m5S.placeholder" = "Home, Daycare, Work, etc.";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "v6b-UL-epl"; */
-"v6b-UL-epl.text" = "Name";
+"v6b-UL-epl.text" = "Nombre";
 
 /* Class = "UILabel"; text = "Distance Trigger:"; ObjectID = "y3H-jl-rS8"; */
 "y3H-jl-rS8.text" = "Distance Trigger:";

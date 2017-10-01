@@ -77,18 +77,19 @@ final class RegionCell: UITableViewCell, MKMapViewDelegate {
         //Swift.print("toggleEnabled")
         if region != nil{
             if region!.currentlyMonitored{
-                region!.currentlyMonitored = false
+                //                region!.currentlyMonitored = false
                 entryButton.isEnabled = false
                 notifyEntrySwitch.isEnabled = false
                 exitButton.isEnabled = false
                 notifyExitSwitch.isEnabled = false
             }else{
-                region!.currentlyMonitored = true
+                //                region!.currentlyMonitored = true
                 entryButton.isEnabled = true
                 notifyEntrySwitch.isEnabled = true
                 exitButton.isEnabled = true
                 notifyExitSwitch.isEnabled = true
             }
+            delegate?.toggleMonitoringForRegion(region!)
         }
     }
 

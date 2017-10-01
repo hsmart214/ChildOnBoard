@@ -38,7 +38,7 @@ extension UIViewController{
 
 extension UIColor{
     public static var COBGreen : UIColor {
-        return UIColor(colorLiteralRed: 0.0, green: 80.0/256.0, blue: 20.0/256.0, alpha: 1.0)
+        return #colorLiteral(red: 0, green: 0.3784049749, blue: 0.09952429682, alpha: 1)
     }
 }
 
