@@ -33,7 +33,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
     var postRedundantNotices = true
     var regionMonitoringOnAtStart = false
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let defaults = UserDefaults.standard
         companion = defaults.string(forKey: Constants.companionKey) ?? companion
         monitoringRegions = defaults.bool(forKey: Constants.monitoringRegionsKey)
@@ -45,7 +45,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
         }
         locationManager.delegate = self
         locationManager.requestAlwaysAuthorization()
-        if let notification = launchOptions?[UIApplicationLaunchOptionsKey.localNotification] as? UILocalNotification {
+        if let notification = launchOptions?[UIApplication.LaunchOptionsKey.localNotification] as? UILocalNotification {
             self.application(application, didReceive: notification)
         }
         return true
@@ -97,7 +97,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDe
         
         let cat3 = UIMutableUserNotificationCategory()
         cat3.identifier = Constants.arrivalCategory
-        cat3.setActions([act5], for: .default)
+        //cat3.setActions([act5], for: .default)
         
         return [cat1, cat2, cat3]
     }

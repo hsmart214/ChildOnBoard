@@ -49,7 +49,7 @@ final class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, Regi
     }
     
     func replace(region : COBCircularRegion, with newRegion: COBCircularRegion){
-        if let index = monitoredRegions.index(of: region){
+        if let index = monitoredRegions.firstIndex(of: region){
 //            monitoredRegions.remove(at: index)
 //            monitoredRegions.insert(newRegion, at: index)
             monitoredRegions[index] = newRegion
@@ -65,7 +65,7 @@ final class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, Regi
     }
     
     func removeRegion(_ region: CLCircularRegion){
-        if let index = monitoredRegions.index(of: region){
+        if let index = monitoredRegions.firstIndex(of: region){
             monitoredRegions.remove(at: index)
         }
         delegate?.removeRegion(region)
@@ -145,7 +145,7 @@ final class MonitoredRegionsTVC: UITableViewController, EditRegionDelegate, Regi
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
             tableView.beginUpdates()
             delegate?.removeRegion(monitoredRegions[(indexPath as NSIndexPath).row])

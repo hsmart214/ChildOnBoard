@@ -65,9 +65,9 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
         defaults.set(Int(defaultRadius), forKey: Constants.radiusKey)
         if circle != nil{
             let center = circle!.coordinate
-            mapView.remove(circle!)
+            mapView.removeOverlay(circle!)
             circle = MKCircle(center: center, radius: defaultRadius)
-            mapView.add(circle!)
+            mapView.addOverlay(circle!)
         }
         
     }
@@ -82,14 +82,14 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         if circle != nil{
-            mapView.remove(circle!)
+            mapView.removeOverlay(circle!)
         }
         location = view.annotation!.coordinate
         placemark = view.annotation as? MKPlacemark // this will correctly nil out the placemark if one is not available
         if let name = regionNameTextField.text , name != "" {saveButton.isEnabled = true}
         circle = MKCircle(center: location!, radius: defaultRadius)
-        mapView.add(circle!)
-        let span = MKCoordinateRegionMakeWithDistance(location!, defaultEdge, defaultEdge)
+        mapView.addOverlay(circle!)
+        let span = MKCoordinateRegion.init(center: location!, latitudinalMeters: defaultEdge, longitudinalMeters: defaultEdge)
         mapView.region = span
     }
     
@@ -186,14 +186,14 @@ final class EditRegionTVC: UITableViewController, UISearchBarDelegate, UITextFie
         let defaults = UserDefaults.standard
         if let reg = region{
             mapView.showsUserLocation = false
-            let span = MKCoordinateRegionMakeWithDistance(reg.center, defaultEdge, defaultEdge)
+            let span = MKCoordinateRegion.init(center: reg.center, latitudinalMeters: defaultEdge, longitudinalMeters: defaultEdge)
             mapView.region = span
             mapView.addAnnotation(reg.placemark ?? reg)
             regionNameTextField.text = reg.identifier
             saveButton.isEnabled = true
             defaultRadius = reg.radius
             circle = MKCircle(center: reg.center, radius: reg.radius)
-            mapView.add(circle!)
+            mapView.addOverlay(circle!)
         }else{
             mapView.showsUserLocation = true
             saveButton.isEnabled = false

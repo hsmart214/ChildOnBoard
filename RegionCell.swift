@@ -121,7 +121,7 @@ final class RegionCell: UITableViewCell, MKMapViewDelegate {
                 break
             }
             for overlay in mapView.overlays{
-                mapView.remove(overlay)
+                mapView.removeOverlay(overlay)
             }
             for annot in mapView.annotations{
                 mapView.removeAnnotation(annot)
@@ -148,11 +148,11 @@ final class RegionCell: UITableViewCell, MKMapViewDelegate {
                 if let pm = region!.placemark {
                     mapView.addAnnotation(pm)
                     mapView.showAnnotations([pm], animated: false)
-                    let span = MKCoordinateRegionMakeWithDistance(region!.center, rad*2.5, rad*2.5)
+                    let span = MKCoordinateRegion.init(center: region!.center, latitudinalMeters: rad*2.5, longitudinalMeters: rad*2.5)
                     mapView.region = span
                     // Draw a circle for the monitored radius
                     let circ = MKCircle(center: pm.coordinate, radius: rad)
-                    mapView.add(circ)
+                    mapView.addOverlay(circ)
                 }
                 
             }

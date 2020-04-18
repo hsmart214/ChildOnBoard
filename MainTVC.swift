@@ -111,7 +111,7 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
     }
     
     func replace(region : COBCircularRegion, with newRegion : COBCircularRegion){
-        if let index = monitoredRegions.index(of: region){
+        if let index = monitoredRegions.firstIndex(of: region){
 //            monitoredRegions.remove(at: index)
 //            monitoredRegions.insert(newRegion, at: index)
             monitoredRegions[index] = newRegion
@@ -120,7 +120,7 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
     }
     
     func removeRegion(_ region: CLCircularRegion) {
-        if let index = monitoredRegions.index(of: region){
+        if let index = monitoredRegions.firstIndex(of: region){
             monitoredRegions.remove(at: index)
         }
         self.appDelegate?.monitorRegions(monitoredRegions)
@@ -245,7 +245,7 @@ final class MainTVC: UITableViewController, EditRegionDelegate {
             raysImageView.alpha = 0.0
         }
         updateUI()
-        observer = NotificationCenter.default.addObserver(forName: NSNotification.Name.UIApplicationWillEnterForeground, object: nil, queue: nil){ [weak self]
+        observer = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: nil){ [weak self]
             _ in
             DispatchQueue.main.async{
                 self?.updateUI()
